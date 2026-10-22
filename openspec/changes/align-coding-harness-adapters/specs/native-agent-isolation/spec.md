@@ -23,15 +23,3 @@ The system SHALL separate incompatible OpenCode permission dialects into explici
 #### Scenario: Unsupported inheritance or tool enforcement
 - **WHEN** a host's effective model, effort, context or tools cannot satisfy required worker constraints
 - **THEN** documentation retains the incompatibility and independent-admission limits without automatic model routing, tool grants or modified mathematical bodies
-
-### Requirement: Preservation During Legacy Adapter Migration
-The system SHALL make legacy Kimi staging cleanup explicit and bounded to known generated paths with matching recorded content hashes. Modified files, unrelated assets and paths outside the selected staging root SHALL NOT be deleted.
-
-#### Scenario: Exact legacy migration
-- **WHEN** explicitly requested migration finds only matching known legacy generated files
-- **THEN** only those files are retired and the current Kimi Code payload is generated
-- **AND** unrelated legacy-directory assets remain intact
-
-#### Scenario: Modified or redirected legacy path
-- **WHEN** a known legacy path has modified content or redirects through a symlink outside its expected staging location
-- **THEN** migration fails before deleting any legacy files and reports the preserved conflict

@@ -2,7 +2,7 @@
 
 No host execution, runtime import, installation or tests. Shared role/skill
 snapshots and research.json are inputs. The Antigravity copy is never rewritten.
-Deletion is limited to opt-in, hash-verified legacy Kimi staging migration.
+Default rendering never deletes files.
 """
 from pathlib import Path
 import argparse
@@ -14,44 +14,8 @@ CATALOG = json.loads((BASE / "catalog.json").read_text(encoding="utf-8"))
 RESEARCH = json.loads((BASE / "research.json").read_text(encoding="utf-8"))
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--harness", choices=[h["id"] for h in RESEARCH["harnesses"]])
-parser.add_argument("--migrate-kimi-legacy", action="store_true",
-                    help="Retire only exact known generated legacy .kimi staging files; preserve conflicts")
 ARGS = parser.parse_args()
 SELECTED = ARGS.harness
-
-
-def migrate_kimi_legacy():
-    if SELECTED not in (None, "kimi-code"):
-        parser.error("--migrate-kimi-legacy requires --harness kimi-code or all harnesses")
-    manifest = json.loads((BASE / "legacy-kimi-files.json").read_text(encoding="utf-8"))
-    pending = []
-    conflicts = []
-    root = BASE.resolve()
-    for relative, digest in manifest["files"].items():
-        path = Path(relative)
-        if path.is_absolute() or path.parts[:2] != ("kimi-code", ".kimi") or ".." in path.parts:
-            conflicts.append(relative)
-            continue
-        target = BASE / path
-        # Reject any redirected component, including dangling links and Windows junctions.
-        components = [BASE.joinpath(*path.parts[:i]) for i in range(1, len(path.parts) + 1)]
-        if (any(p.is_symlink() or (hasattr(p, "is_junction") and p.is_junction()) for p in components)
-                or target.resolve() != root / path):
-            conflicts.append(relative)
-        elif target.exists():
-            if not target.is_file() or hashlib.sha256(target.read_bytes()).hexdigest() != digest:
-                conflicts.append(relative)
-            else:
-                pending.append(target)
-    if conflicts:
-        parser.error("Legacy migration preserved all files; conflicting/redirected paths: " + ", ".join(conflicts))
-    # All candidates are checked before unlinking; no directory or unknown file is removed.
-    for target in pending:
-        target.unlink()
-
-
-if ARGS.migrate_kimi_legacy:
-    migrate_kimi_legacy()
 
 
 def write(relative, content):
@@ -286,7 +250,7 @@ follow the installed version's repository-root rules; do not assume a checkout w
 `.git` has identical discovery. User roots are `$KIMI_CODE_HOME/agents` and `/skills`
 (default `~/.kimi-code`); generic `.agents` roots can cause name collisions. Additional
 agent directories use `extra_agent_dirs` in config.toml, not an assumed `--agents-dir`.
-No legacy `.kimi/mathtrace.yaml` launch is used. Select a discovered `math-*` profile
+No legacy launch configuration is used. Select a discovered `math-*` profile
 through the native Agent tool with the exact task packet in its prompt.
 
 `tools: []` denies tools and `subagents: []` denies nested delegation. Model/provider/
@@ -294,18 +258,6 @@ effort fields are omitted; without a secondary-model pool/force override, model 
 thinking inherit. A configured secondary pool changes omission semantics. Verify those
 settings rather than enabling a router or pinning a provider model. Do not interpolate
 `${base_prompt}` into self-contained worker bodies or add foreign model/mode fields.
-
-The renderer's optional staging-only migration is:
-
-```text
-python coding-harnesses/render.py --harness kimi-code --migrate-kimi-legacy
-```
-
-It checks every known old generated path against `legacy-kimi-files.json` before
-removing any matching files. Modified/redirected candidates abort cleanup; unknown
-files and directories remain. Default rendering never deletes. This command does not
-migrate an installed project's `.kimi`, home settings or credentials. Preserve and
-reconcile any installed legacy customizations manually before switching products.
 
 These payloads do not establish live host qualification or producer-bound admission.
 """)

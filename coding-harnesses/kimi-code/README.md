@@ -9,7 +9,7 @@ Research date: 2026-10-21. Target: MoonshotAI/kimi-code current Node CLI Markdow
 | Custom agents | .kimi-code/agents/&lt;name&gt;.md with name, description, tools: [], subagents: [] and the unchanged full role body. No legacy YAML agent map or provider model fields. |
 | Delegation | Native Agent tool selecting a discovered math-* subagent_type with the complete exact task packet. Use a fresh context and the installed tool schema. |
 
-See SETUP.md. Merge only .kimi-code/skills and .kimi-code/agents into the target project; keep shared references and existing AGENTS instructions. Start a fresh host session and confirm project-root discovery, especially outside a Git checkout. Extra roots use extra_agent_dirs. Use --migrate-kimi-legacy only to retire exact known generated staging files; installed legacy configuration and external/modified files are preserved.
+See SETUP.md. Merge only .kimi-code/skills and .kimi-code/agents into the target project; keep shared references and existing AGENTS instructions. Start a fresh host session and confirm project-root discovery, especially outside a Git checkout. Extra roots use extra_agent_dirs. Installed legacy configuration and external/modified files are preserved.
 
 Native setup, role binding and unsupported features: [SETUP.md](SETUP.md).
 

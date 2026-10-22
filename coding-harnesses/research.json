@@ -356,7 +356,7 @@
       "agents": ".kimi-code/agents/<name>.md with name, description, tools: [], subagents: [] and the unchanged full role body. No legacy YAML agent map or provider model fields.",
       "delegation": "Native Agent tool selecting a discovered math-* subagent_type with the complete exact task packet. Use a fresh context and the installed tool schema.",
       "limits": "Without a secondary-model pool/force override, model and thinking inherit. A configured secondary pool changes omission semantics; verify effective settings and do not enable routing. Empty tools/subagents are explicit denials. Project-root discovery and effective context/tool controls require installed-version inspection; unknown foreign model/mode fields are not inheritance controls. No capture backend.",
-      "install": "See SETUP.md. Merge only .kimi-code/skills and .kimi-code/agents into the target project; keep shared references and existing AGENTS instructions. Start a fresh host session and confirm project-root discovery, especially outside a Git checkout. Extra roots use extra_agent_dirs. Use --migrate-kimi-legacy only to retire exact known generated staging files; installed legacy configuration and external/modified files are preserved.",
+      "install": "See SETUP.md. Merge only .kimi-code/skills and .kimi-code/agents into the target project; keep shared references and existing AGENTS instructions. Start a fresh host session and confirm project-root discovery, especially outside a Git checkout. Extra roots use extra_agent_dirs. Installed legacy configuration and external/modified files are preserved.",
       "sources": [
         "https://github.com/MoonshotAI/kimi-code",
         "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/agents.md",

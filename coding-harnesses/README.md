@@ -84,7 +84,7 @@ Do not launch a host from these nested staging directories: ancestor discovery m
 
 ## Ownership and maintenance
 
-[Shared skills](shared/skills/), [role prompts](shared/roles/), [protocol](shared/PROTOCOL.md) and [help](shared/help.md) own the copied workflow meaning; [POLICY](shared/POLICY.md) owns only the host transport scope. `research.json` owns harness findings and binding descriptions. `render.py` emits thin skill wrappers, format-specific role files and harness READMEs from those inputs. It only writes inside this directory and never installs. Default rendering never deletes; explicit `--migrate-kimi-legacy` retires only hash-matching known old staging files after preflight, preserving modified and external assets. Antigravity is an untouched snapshot and excluded from rendering.
+[Shared skills](shared/skills/), [role prompts](shared/roles/), [protocol](shared/PROTOCOL.md) and [help](shared/help.md) own the copied workflow meaning; [POLICY](shared/POLICY.md) owns only the host transport scope. `research.json` owns harness findings and binding descriptions. `render.py` emits thin skill wrappers, format-specific role files and harness READMEs from those inputs. It only writes inside this directory and never installs. Default rendering never deletes files. Antigravity is an untouched snapshot and excluded from rendering.
 
 For later regeneration, run `python coding-harnesses/render.py` after reviewing intentional changes to the inputs. Generated wrapper/role edits would be overwritten. Refresh snapshots deliberately from the authoritative runtime renderer when its meaning changes; do not treat these copies as a new authority for the main runtime or reinstall them over its owned projection.
 
@@ -94,4 +94,4 @@ The original protocol includes Antigravity-specific calls; on other hosts apply 
 
 See [STATUS](STATUS.md) for current and historical evidence, [official sources](SOURCES.md) and the [approved audit](../work/harness-audit-2026-10-21/AUDIT-AND-REMEDIATION.md). Regression/package/OpenSpec verification is recorded in the change; native hosts have not been installed or qualified.
 
-To retire verified old Kimi staging files, run `python coding-harnesses/render.py --harness kimi-code --migrate-kimi-legacy`. Conflicts abort before deletion; installed user settings are outside its scope. See [Kimi setup](kimi-code/SETUP.md) and the mutually exclusive [OpenCode V1](opencode/SETUP.md) / [V2](opencode-v2/SETUP.md) setup guides.
+See [Kimi setup](kimi-code/SETUP.md) and the mutually exclusive [OpenCode V1](opencode/SETUP.md) / [V2](opencode-v2/SETUP.md) setup guides.

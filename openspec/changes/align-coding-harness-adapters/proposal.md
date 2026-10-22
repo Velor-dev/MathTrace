@@ -7,7 +7,7 @@ The approved 2026-10-21 harness audit found missing Cline static profiles, an ar
 ## What Changes
 
 - Generate eleven Cline frontmatter-plus-body `.yaml` profiles with empty tool lists for the audited loader contract.
-- **BREAKING**: migrate the Kimi Code staging payload from legacy `.kimi` YAML mappings to `.kimi-code` Markdown agents and skills; retire only exact known generated legacy files, preserving modified and external assets.
+- **BREAKING**: update the Kimi Code staging payload to modern `.kimi-code` Markdown agents and skills, retiring obsolete `.kimi` staging files.
 - Preserve `opencode` as V1; add explicitly selectable `opencode-v2` staging output with plural ordered permissions. Kilo stays on its own singular dialect.
 - Restore Devin shared role body identity and refresh all audited compatibility documentation, inheritance caveats and dynamic-provider descriptions.
 - Add deterministic generation, preservation and migration regression checks. Keep Antigravity and shared mathematical instructions unchanged.

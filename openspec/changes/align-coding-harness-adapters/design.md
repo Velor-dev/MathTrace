@@ -15,7 +15,7 @@ See proposal.md and the approved report at work/harness-audit-2026-10-21/AUDIT-A
 - Keep `opencode` as the backward-compatible V1 selector and add `opencode-v2` as a separate catalog/research entry and staging directory. Both deploy to `.opencode` but are mutually exclusive. This avoids a silently breaking default or a mutable active variant.
 - Add Cline `.yaml` files using frontmatter plus the exact body, `tools: []` and no skills/provider/model fields. Document the pinned source revision and named `subagent_math_*` tool; `.md` discovery is not assumed from GSD.
 - Generate current Kimi under `.kimi-code` with Markdown agent bodies, `tools: []`, `subagents: []`. Remove the obsolete root YAML-map emission. Keep secondary-model/configuration caveats root-facing.
-- Add an explicit `--migrate-kimi-legacy` renderer option, valid only for all-harness or Kimi selection. A checked-in migration input records exact SHA-256 hashes of the twenty old generated files. Validate every candidate path and content before deleting any; unlink only matching regular files. Never recursively remove directories, follow redirected paths or prune unrelated files. Default rendering does not delete.
+- Retire obsolete `.kimi` staging payloads and keep modern `.kimi-code` Markdown profiles and skills.
 - Remove Devin body rewriting; compatibility remains a dispatch prerequisite in transport docs. Retain Claude/Cursor inheritance fields and all other audited native dialects.
 - Keep payload generation in render.py. Thin setup guidance is generated there; research.json remains the binding source. Focused regression tests execute the script on isolated staging copies and check output behavior and preservation, not provider inference.
 

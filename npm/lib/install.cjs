@@ -44,8 +44,7 @@ function mapping(root,bundle,args,old) {
     else if(source.startsWith('docs/'))add(source,'.mathtrace/'+source);
     else if(source.startsWith(`coding-harnesses/${h.id}/`)) {
       const local=source.slice(`coding-harnesses/${h.id}/`.length);
-      if(local.startsWith('.kimi/'))continue;
-      if(local.startsWith('.')) {
+            if(local.startsWith('.')) {
         if(h.id==='codex' && (local.startsWith('.codex/skills/')||local.startsWith('.agents/skills/')) && !local.startsWith(codexSkills+'/'))continue;
         add(source,local);
       } else add(source,source);

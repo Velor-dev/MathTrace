@@ -73,7 +73,7 @@ def assemble(output):
     # Copy only runtime guidance, never development plans or provenance snapshots.
     for relative in ['shared', *[h['id'] for h in research['harnesses']]]:
         target = data / 'coding-harnesses' / relative
-        shutil.copytree(source / relative, target, ignore=shutil.ignore_patterns('__pycache__', '.kimi'))
+        shutil.copytree(source / relative, target, ignore=shutil.ignore_patterns('__pycache__'))
     for name in ('README.md', 'catalog.json', 'research.json'):
         target = data / 'coding-harnesses' / name
         target.parent.mkdir(exist_ok=True)
