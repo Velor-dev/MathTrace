@@ -1,5 +1,7 @@
 # MathTrace
 
+![MathTrace AI reasoning pipeline](assets/mathtrace-banner.png)
+
 **MathTrace** is an AI-powered mathematical problem-solving workflow and formal verification runtime. It combines autonomous multi-agent mathematical reasoning with rigorous, tamper-evident audit trails, native execution with optional Linux sandboxes, and interactive Lean 4 proof checking.
 
 MathTrace structures mathematical inquiry into an immutable, ledger-backed process—ensuring that every theorem, proof obligation, computational step, and counterexample is tracked, verified, and preserved with complete provenance.

@@ -70,5 +70,3 @@ node_modules/
 *.tgz
 /work/
 
-# Upload separately through GitHub Settings; keep the local original
-/MathTrace_ AI Reasoning Pipeline.png
