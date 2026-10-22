@@ -35,8 +35,8 @@ function loadBundle(base) {
   base=fs.realpathSync(base);
   const manifest=JSON.parse(read(base,'payload/manifest.json'));
   const meta=JSON.parse(read(base,'package.json'));
-  if (manifest.version!==meta.version || !meta.private || !/^v\d+\.\d+\.\d+$/.test(manifest.lean) || !manifest.files[manifest.wheel]) throw Error('Invalid or mismatched bundled release');
-  if(meta.license!=='SEE LICENSE IN LICENSE'||meta.author!=='Velor-dev'||meta.scripts?.prepublishOnly!==`node -e "throw Error('Publication is outside this change')"`)throw Error('Invalid licensing or publication safeguards');
+  if (manifest.version!==meta.version || meta.private!==false || !/^v\d+\.\d+\.\d+$/.test(manifest.lean) || !manifest.files[manifest.wheel]) throw Error('Invalid or mismatched bundled release');
+  if(meta.license!=='SEE LICENSE IN LICENSE'||meta.author!=='Velor-dev'||meta.scripts?.prepublishOnly!==`node -e "require('./lib/files.cjs').loadBundle(process.cwd())"`)throw Error('Invalid licensing or publication safeguards');
   for(const name of ['LICENSE']) {
     const source=read(base,name),copy=read(base,'payload/'+name);
     if(!source||!copy||!source.equals(copy)||!manifest.files[name]||!manifest.files['payload/'+name])throw Error('Missing or inconsistent legal file: '+name);

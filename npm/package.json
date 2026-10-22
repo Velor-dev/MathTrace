@@ -1,7 +1,7 @@
 {
   "name": "mathtrace",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "description": "Project-local MathTrace installer",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
@@ -19,7 +19,20 @@
   ],
   "scripts": {
     "test": "node --test test/*.test.cjs",
-    "prepublishOnly": "node -e \"throw Error('Publication is outside this change')\""
+    "prepublishOnly": "node -e \"require('./lib/files.cjs').loadBundle(process.cwd())\""
   },
-  "author": "Velor-dev"
+  "author": "Velor-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Velor-dev/MathTrace.git",
+    "directory": "npm"
+  },
+  "homepage": "https://github.com/Velor-dev/MathTrace#readme",
+  "bugs": {
+    "url": "https://github.com/Velor-dev/MathTrace/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

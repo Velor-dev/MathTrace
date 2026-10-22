@@ -131,14 +131,14 @@ Installation SHALL report success only after verifying payload integrity, local 
 - **AND** obsolete MathTrace notice files from earlier installations are removed only when unchanged and previously owned
 
 ### Requirement: Explicit license metadata with retained publication safeguards
-The npm artifact SHALL identify its included canonical custom license using file-based license metadata. Distribution-readiness changes SHALL preserve the private-package flag, rejecting publication hook, and private-package validation until release is separately authorized. Installation tests SHALL use local artifacts without publishing or adding a release bypass.
+The npm artifact SHALL identify its canonical custom license using file-based metadata. Authorized public publication SHALL require an assembled, integrity-verified payload; publishing the unassembled source directory SHALL fail. Package validation SHALL preserve license, runtime, version, and payload checks. Tests SHALL use local artifacts without registry writes.
 
-#### Scenario: Local package remains usable and unpublished
-- **WHEN** the package is assembled, packed, validated, and executed in an independent project
-- **THEN** the canonical license reference resolves inside the archive and installation completes under existing prerequisites
-- **AND** the package remains private with its rejecting publication hook and private-package validation intact
+#### Scenario: Authorized public artifact
+- **WHEN** an approved release is assembled, packed, and validated
+- **THEN** the package is public with a resolving canonical license reference and a payload-validating publication hook
+- **AND** registry and access metadata identify the official public npm registry
 
-#### Scenario: Licensing preparation does not authorize release
-- **WHEN** license metadata, documentation, or legal-file propagation is updated
-- **THEN** no publication safeguard is removed, bypassed, or automatically enabled for release
-- **AND** documentation distinguishes local readiness validation from separately authorized GitHub/npm publication
+#### Scenario: Incomplete publication input
+- **WHEN** the publication hook runs without a valid assembled payload
+- **THEN** publication fails before registry writes
+- **AND** tests verify this failure without bypassing integrity checks

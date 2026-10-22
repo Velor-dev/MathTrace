@@ -1,4 +1,4 @@
-"""Assemble a private local npm artifact; never publish or alter source projections."""
+"""Assemble and validate the npm artifact; never publish or alter source projections."""
 import hashlib
 import json
 from pathlib import Path
@@ -31,7 +31,7 @@ def validate_archive(archive):
             if hashlib.sha256(z.extractfile('package/' + name).read()).hexdigest() != digest:
                 raise ValueError('npm archive hash differs: ' + name)
         metadata = json.load(z.extractfile('package/package.json'))
-        if metadata['version'] != manifest['version'] or metadata.get('dependencies') or not metadata['private']:
+        if metadata['version'] != manifest['version'] or metadata.get('dependencies') or metadata.get('private') is not False:
             raise ValueError('npm metadata violates release contract')
         if (metadata.get('license') != 'SEE LICENSE IN LICENSE'
                 or metadata.get('author') != 'Velor-dev'
@@ -56,7 +56,11 @@ def assemble(output):
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     package = output / 'package'
-    shutil.copytree(ROOT / 'npm', package, ignore=shutil.ignore_patterns('test', 'payload', 'node_modules', '*.tgz'))
+    shutil.copytree(ROOT / 'npm', package, ignore=shutil.ignore_patterns('test', 'payload', 'node_modules', '__pycache__', '*.pyc', '*.pyo', '*.tgz'))
+    # npm normalizes executable shebang files during installation. Hash those
+    # canonical LF bytes so installed bin files retain their manifest identity.
+    executable = package / 'bin/install.cjs'
+    executable.write_bytes(executable.read_bytes().replace(b'\r\n', b'\n'))
     for name in LEGAL_FILES:
         shutil.copy2(ROOT / name, package / name)
     wheel = build_wheel(output / 'wheel')

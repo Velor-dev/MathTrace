@@ -1,6 +1,6 @@
 # Project installation and release validation
 
-The npm installer is prepared and tested locally; this checkout does not publish it.
+Run `npx mathtrace@latest` in your project and select an installed coding harness.
 Python 3.11+ with working `venv`/pip and Node 22+ are prerequisites. Python is never
 installed automatically. MathTrace proprietary free-use terms are supplied in LICENSE; separate third-party terms remain intact.
 
@@ -12,7 +12,7 @@ LICENSE. Historical builds are retained; they cannot contaminate this build.
 
 Run `python tools/build_npm.py`; it reports a package directory under
 `work/validation/npm/`. In that directory run `npm pack --ignore-scripts`.
-The private package can be extracted and its `bin/install.cjs` executed with Node
+The package can be extracted and its `bin/install.cjs` executed with Node
 in a separate target project. Registry publication is neither performed nor needed.
 The eventual distribution entry point is `npx mathtrace@latest`; this checkout
 does not grant publication permission or introduce licensing terms.
@@ -79,8 +79,8 @@ the source checkout or npm cache. MathTrace is proprietary, with free personal,
 academic, and commercial use and necessary operational copying under LICENSE.
 Exclude installed MathTrace software assets from public project releases and
 have users reinstall the official distribution. Preserve your own project files
-and root license. Package preparation does not authorize publication; the npm
-private flag and rejecting publication hook remain enabled.
+and root license. Package preparation alone does not publish anything. The prepublish hook requires
+an assembled, integrity-verified payload; publish only an explicitly approved artifact.
 
 Updates remove obsolete MathTrace notice copies only when unchanged and previously
 owned. Edited or unowned conflicts are reported and preserved. Source-repository

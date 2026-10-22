@@ -57,11 +57,15 @@ MathTrace/
 
 ### 1. Installation
 
-A project-local npm installer is available for **local package validation**; registry
-publication is not part of this checkout. See [installation](docs/installation.md)
-for artifact assembly, Python prerequisites, host setup and safe updates. The
-intended distribution command is `npx mathtrace@latest`; current artifacts remain
-private and must not be published without the owner's separate authorization.
+Install into your project with Node 22+ and Python 3.11+:
+
+```bash
+npx mathtrace@latest
+```
+
+Select your installed coding harness from the numbered menu. MathTrace installs
+its runtime and integration inside the current project. See [installation](docs/installation.md)
+for prerequisites, supported hosts, optional execution isolation, and safe updates.
 
 Install MathTrace in development mode or as a standalone wheel:
 
@@ -182,8 +186,8 @@ project files are not restricted merely because you used MathTrace. Do not
 remove your own shared instruction files; exclude only copied MathTrace material
 from public redistribution. These permissions do not override third-party terms.
 
-The npm package remains private and publication safeguards remain enabled.
-GitHub source publication does not publish the npm package or create a release.
+The official npm package is `mathtrace`. Publication requires an assembled,
+integrity-verified payload; package publication does not create a GitHub release.
 
 ## Third-party attribution
 

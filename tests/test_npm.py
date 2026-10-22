@@ -33,7 +33,8 @@ class NpmPackageTests(unittest.TestCase):
             names = z.getnames()
         self.assertIn('package/payload/coding-harnesses/codex/.codex/agents/math-prover.toml', names)
         self.assertIn('package/payload/coding-harnesses/codex/.codex/skills/math-intake/SKILL.md', names)
-        self.assertFalse(any('/.math/' in n or '/work/' in n or '/.venv/' in n or '/.kimi/' in n or 'openspec-' in n for n in names))
+        self.assertFalse(any('/.math/' in n or '/work/' in n or '/.venv/' in n or '/.kimi/' in n or 'openspec-' in n or '/__pycache__/' in n or n.endswith(('.pyc', '.pyo')) for n in names))
+        self.assertNotIn(b'\r\n', (self.extracted / 'package/bin/install.cjs').read_bytes())
         for obsolete in ('NOTICE.txt', 'THIRD_PARTY_NOTICES.txt', 'THIRD_PARTY_NOTICES.md'):
             self.assertFalse((self.extracted / ('package/' + obsolete)).exists())
             self.assertFalse((self.extracted / ('package/payload/' + obsolete)).exists())
@@ -51,7 +52,7 @@ class NpmPackageTests(unittest.TestCase):
             for prefix in ('package/', 'package/payload/'):
                 mutations.extend([(prefix + name, None), (prefix + name, b'changed terms')])
         meta = json.loads(original['package/package.json'])
-        for key, value in [('license', 'MIT'), ('author', 'Other'), ('private', False),
+        for key, value in [('license', 'MIT'), ('author', 'Other'), ('private', True),
                            ('scripts', {**meta['scripts'], 'prepublishOnly': 'echo publish'})]:
             mutations.append(('package/package.json', json.dumps({**meta, key: value}).encode()))
         # A changed nested wheel must fail even if its npm manifest hash is valid.
@@ -90,7 +91,7 @@ class NpmPackageTests(unittest.TestCase):
         subprocess.run(['node', '-e', script, module, str(self.extracted / 'package')], check=True)
         meta = self.extracted / 'package/package.json'
         original = meta.read_bytes()
-        for field, value in [('version', '9.0.0'), ('private', False),
+        for field, value in [('version', '9.0.0'), ('private', True),
                              ('scripts', {'prepublishOnly': 'echo publish'})]:
             with self.subTest(field=field):
                 data = json.loads(original); data[field] = value; meta.write_text(json.dumps(data))
@@ -100,14 +101,17 @@ class NpmPackageTests(unittest.TestCase):
                 finally:
                     meta.write_bytes(original)
 
-    def test_publication_safeguards_remain_disabled_locally(self):
+    def test_publication_requires_assembled_verified_payload(self):
         meta = json.loads((ROOT / 'npm/package.json').read_text())
-        self.assertIs(meta['private'], True)
-        hook = "node -e \"throw Error('Publication is outside this change')\""
-        self.assertEqual(meta['scripts']['prepublishOnly'], hook)
-        result = subprocess.run(['node', '-e', "throw Error('Publication is outside this change')"], capture_output=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn(b'Publication is outside this change', result.stderr)
+        self.assertIs(meta['private'], False)
+        self.assertEqual(meta['publishConfig']['registry'], 'https://registry.npmjs.org/')
+        self.assertEqual(meta['publishConfig']['access'], 'public')
+        command = "require('./lib/files.cjs').loadBundle(process.cwd())"
+        self.assertEqual(meta['scripts']['prepublishOnly'], 'node -e "' + command + '"')
+        result = subprocess.run(['node', '-e', command], cwd=ROOT / 'npm', capture_output=True)
+        self.assertNotEqual(result.returncode, 0)  # Source directory has no assembled payload.
+        result = subprocess.run(['node', '-e', command], cwd=self.extracted / 'package', capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_every_harness_mapping_and_required_guide_resolves(self):
         script = r"""
