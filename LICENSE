@@ -1,0 +1,47 @@
+MathTrace Proprietary License
+SPDX-License-Identifier: LicenseRef-MathTrace-Proprietary
+
+Copyright © 2026 Velor-dev
+All rights reserved except as expressly granted below.
+
+1. Free use and necessary copies
+Permission is granted, without charge, to individuals and organizations to use
+MathTrace for personal, academic, and commercial purposes. You may download,
+install, execute, and update MathTrace and make the project-local copies,
+caches, backups, and recovery copies necessary for that use. Authorized users
+and automated agents/CI within your organization may make necessary internal
+operational copies. This includes copying the runtime, skills, agents,
+protocols, and guides and the path binding and configuration/file generation
+performed by MathTrace's intended installer. Retain applicable copyright,
+license, and third-party notices in these copies.
+
+2. Reserved rights
+Except for the operational permissions above, platform rights below, and rights
+that applicable law does not allow to be restricted, no permission is granted
+to modify MathTrace, create derivative versions of it, sublicense, resell,
+republish, or redistribute MathTrace itself. These reservations cover its code,
+skills, agents, protocols, and documentation. The installer exception does not
+authorize general source or prompt modification. Other permissions require
+express authorization from the rights holder.
+
+3. Your materials
+These restrictions do not apply to your original projects, prompts, proofs,
+research, or results merely because you use MathTrace. Copies of MathTrace
+material included in a result remain subject to their applicable terms. This
+license does not determine ownership of third-party or generated material.
+When distributing your own project publicly, exclude installed MathTrace
+software assets and direct users to install the official distribution instead;
+this license grants no general right to redistribute installed skills or agents.
+
+4. Public platforms and third-party components
+These terms accommodate GitHub and npm service rights necessary to host and
+deliver the authorized public distribution, including GitHub's service-based
+viewing and forking rights. They do not grant a general right to republish
+MathTrace elsewhere. Third-party material remains governed by its own licenses,
+not by this license; see the third-party attribution in README.md and the notices supplied with
+those components. Nothing here overrides mandatory rights under applicable law.
+
+5. Disclaimer
+MathTrace is provided "as is", without warranties of any kind, to the extent
+permitted by applicable law. To that extent, the rights holder is not liable
+for claims or damages arising from use of MathTrace.

@@ -1,0 +1,112 @@
+{
+  "research_date": "2026-10-15",
+  "root_AGENTS_restored": false,
+  "root_GEMINI_restored": false,
+  "paused_locations": [
+    "work/AGENTS.md",
+    "work/GEMINI.md"
+  ],
+  "scope": "All additions remain under coding-harnesses. Root .agents copied, not moved. No runtime imports/execution, special tests, build, package or harness launch.",
+  "files": [
+    {
+      "path": ".agents/math-runtime-manifest.json",
+      "sha256": "8875cc01a9c931151aa96129c3b85fc2cd3e42c01d1182190ea8bd30cc9311e1"
+    },
+    {
+      "path": ".agents/mcp_config.json",
+      "sha256": "d8e397af03b5b032f21d0aa967086f0c78b33c87b76f2e9898ae0a144df7de02"
+    },
+    {
+      "path": ".agents/math/help.md",
+      "sha256": "5a161fa56e40cc115093eeab392825a9b97dcb0e7cc0a87a9bbc72f73456c437"
+    },
+    {
+      "path": ".agents/math/PROTOCOL.md",
+      "sha256": "e293c79f578c14339a244c25b3b46f3716045a1f1de3e44f49a0e2649fddf164"
+    },
+    {
+      "path": ".agents/skills/mathtrace-help/SKILL.md",
+      "sha256": "4ce5a42dd0102eca0b6b3e8dc2e9b2bd0b95ed936c3fa65a08c3682125a6d090"
+    },
+    {
+      "path": ".agents/skills/math-audit/SKILL.md",
+      "sha256": "3ec0d241633b8c08dacf374cc96fb55dc10550e2ba30d3727774dc674944bef2"
+    },
+    {
+      "path": ".agents/skills/math-capture/SKILL.md",
+      "sha256": "68e81a102b9278e8b8f538191af72ae590a47c0950dd5740ca1bb2ce041db59c"
+    },
+    {
+      "path": ".agents/skills/math-formalize/SKILL.md",
+      "sha256": "75f22c42ffb8b0fdadddf67bea9b636b723dd288b474b5fc941a520f38b6b00d"
+    },
+    {
+      "path": ".agents/skills/math-intake/SKILL.md",
+      "sha256": "83a2407c9ad5bd7bde678cf696a658a1118877fc02dbe2db072058b2bb73566a"
+    },
+    {
+      "path": ".agents/skills/math-progress/SKILL.md",
+      "sha256": "99bb292db625392e2b331e76c685c43fa24f2c290ccd12f99e1cf0c3b5073b0b"
+    },
+    {
+      "path": ".agents/skills/math-release/SKILL.md",
+      "sha256": "7b49ee2d854134c27f5349152ff3b2ebc3e0bd7ac5156a911b2ca09e0486dbc7"
+    },
+    {
+      "path": ".agents/skills/math-research/SKILL.md",
+      "sha256": "eda5bf07aa37b8cbdc4590fd62a8eec888fc99eb0b10410605683393d7b47ac4"
+    },
+    {
+      "path": ".agents/agents/math-adjudicator/agent.md",
+      "sha256": "882502c5529b93888505b4ec174c90b507235276ef6f7ab2ffdb5ae01bc5cf01"
+    },
+    {
+      "path": ".agents/agents/math-computationalist/agent.md",
+      "sha256": "16aa6f5c3744601167628e3f87b48e94e618940c16e18d54ac046443a7276990"
+    },
+    {
+      "path": ".agents/agents/math-falsifier/agent.md",
+      "sha256": "2fe33e9fb71e160e52a43ce46ed23121a157065a94962d189c312e2d8d638b4e"
+    },
+    {
+      "path": ".agents/agents/math-fidelity-auditor/agent.md",
+      "sha256": "da4495abde1e89b65a9377f05f4def95db74ba96ed9ed669223f3c7936dac84c"
+    },
+    {
+      "path": ".agents/agents/math-formalizer/agent.md",
+      "sha256": "7eb582ae434f4728a0ff77f518bdd388f0a0234f959bc68551dd399658e6a257"
+    },
+    {
+      "path": ".agents/agents/math-prover/agent.md",
+      "sha256": "d370c67b40afe76eef7010f0ddebe6b7e5dbef6d5ad6766f949a969e71e4ea2f"
+    },
+    {
+      "path": ".agents/agents/math-referee/agent.md",
+      "sha256": "77eee67086c7297212c84016fb32932821aabf542fd8ab6152786f03a3f19361"
+    },
+    {
+      "path": ".agents/agents/math-reproducer/agent.md",
+      "sha256": "9affbeea30360fae1df4175b2e18e1b371401573cb344cad0a5dd7f032742247"
+    },
+    {
+      "path": ".agents/agents/math-scout/agent.md",
+      "sha256": "22fbc1876771ac6526d0be5c0b2dabb3e51af41b6bf6ebc3413b34f738301bde"
+    },
+    {
+      "path": ".agents/agents/math-strategist/agent.md",
+      "sha256": "d32cd8160c698d55c1601440846aad63e5c689274ad6a2963fff3d15d1decea5"
+    },
+    {
+      "path": ".agents/agents/math-theorem-checker/agent.md",
+      "sha256": "6adc405acf9a3edd09397f900d4a4600063511f44f01e412f00d9ad26a615e58"
+    }
+  ],
+  "shared_adaptations": [
+    "Role bodies extracted unchanged from existing agent files.",
+    "Skill bodies unchanged except protocol/help file references rebased to shared copies.",
+    "Shared help links rebased; absent root development instruction link made conditional; host invocation/capture scope and optional source-checkout links clarified without changing skill behavior.",
+    "PROTOCOL.md is the original Antigravity protocol snapshot, with non-Antigravity binding limits in POLICY.md."
+  ],
+  "roles": 11,
+  "skills": 8
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Exact renderer-owned legacy Python kimi-cli staging files; opt-in migration only. Modified and external assets must be preserved.",
+  "files": {
+    "kimi-code/.kimi/agents/math-adjudicator.yaml": "f31721a0eed9523b5b344a07d251e9ac0a2c2a64ab1151d711688c7a39770f30",
+    "kimi-code/.kimi/agents/math-computationalist.yaml": "f2cff7aebd42c86ea3b178bb39d96f9400444db37184b859291196d720cf4b3e",
+    "kimi-code/.kimi/agents/math-falsifier.yaml": "611c03e25bd06a4fbc24806378bbed689949d350683d82e8fdc00f9c4dc6b075",
+    "kimi-code/.kimi/agents/math-fidelity-auditor.yaml": "1316888f3994a3597919919cb1c0494475cc6862515401088501909d5c7ea8ef",
+    "kimi-code/.kimi/agents/math-formalizer.yaml": "ae59af4bf3c4221181f91a9c3b2ea85f4daa1d109088d7aa2e055d5520db2cff",
+    "kimi-code/.kimi/agents/math-prover.yaml": "b5c6b5ac7d6094d4c373ccae9210f96a04441ae13aa7bf95c80f5b595571a813",
+    "kimi-code/.kimi/agents/math-referee.yaml": "05f85709c58bc57107f9177d6a3d379fafca78c8809ff477072d4fb32694a909",
+    "kimi-code/.kimi/agents/math-reproducer.yaml": "18dcd1321be3112d38c68554283d45ad6f582528fe1531a61f6fe24dc0b64824",
+    "kimi-code/.kimi/agents/math-scout.yaml": "6ba69119891fbea9ec36df635b60edabce4bcf4d41a2a7b6f03d1c140335b967",
+    "kimi-code/.kimi/agents/math-strategist.yaml": "c60d8e9de0c22761cd95d14f20663858ddc5e35cfe4b3faa88ad9b106fc43586",
+    "kimi-code/.kimi/agents/math-theorem-checker.yaml": "c75bcec5b6a7c320dba95c2e3d21254377a0661819e65975f8bb54e76ddf89ff",
+    "kimi-code/.kimi/mathtrace.yaml": "c27d8917fef506cc0b85e53c1a7c91d4881bfcb5444b17732a60375a3085210f",
+    "kimi-code/.kimi/skills/math-audit/SKILL.md": "e7aeb8fd04a6930c095732696b7851df7b40e0d528be3b8ddad240303d7cae13",
+    "kimi-code/.kimi/skills/math-capture/SKILL.md": "4bd166343adf10004ab24a612bfa2b54d401c4f8669361a1b575818fa7a12def",
+    "kimi-code/.kimi/skills/math-formalize/SKILL.md": "16355e5762204fe1178f02f402e949d2b8cd860d28e84e2eac05c3cc4af0d2d5",
+    "kimi-code/.kimi/skills/math-intake/SKILL.md": "e6d30558242603a9480651f9838ffc10618ed0bd2f9a82232c7805f9ceba7b61",
+    "kimi-code/.kimi/skills/math-progress/SKILL.md": "04ddc21e4f91631675b2f9c1d0cd631e3c0d3caf0ca80576188b48ca468ce5bd",
+    "kimi-code/.kimi/skills/math-release/SKILL.md": "319726d4563d67be0e88a93fdf13f59982c6f50cbc237828767f910def977567",
+    "kimi-code/.kimi/skills/math-research/SKILL.md": "fc4266aa0f6fa188409552e963da3c4bef1b23585ce286aabdc4e0269dfd1a6b",
+    "kimi-code/.kimi/skills/mathtrace-help/SKILL.md": "3d59638ffa30243fed5730126ec5ecf235ecea357432fc65d9b8c43a3c473d2c"
+  }
+}

@@ -1,0 +1,26 @@
+# Tasks
+
+## 1. Canonical terms, attribution, and guidance
+
+- [x] 1.1 Add root `LICENSE` implementing only the approved proprietary free-use and necessary-copy permissions, reserved rights, user-material boundary, and platform/third-party exceptions; verify every licensing-and-attribution scenario against the text and use exactly `Copyright © 2026 Velor-dev` without an invented legal identity.
+- [x] 1.2 Add `THIRD_PARTY_NOTICES.txt` with verified attribution and full applicable MIT text for retained OpenSpec skills; distinguish source-only assets, bundled materials, and downloaded/external dependencies. Verify against the specific retained upstream materials and check that Lean distribution license files remain intact; report unresolved provenance or legal-holder needs rather than inventing them.
+- [x] 1.3 Replace contradictory current notice/README wording and update existing npm/install guidance to reference the canonical terms, explain public-project exclusion/reinstallation, and distinguish preparation from release; verify relative legal-file references resolve and current guidance makes no confidentiality, research-only, open-source, or unauthorized redistribution claims. Preserve historical archived documents.
+- [x] 1.4 Identify Velor-dev as the public project author/developer in README.md and NOTICE.txt and align npm/Python author metadata; verify attribution and license references agree without invented legal identity or contact details.
+- [x] 1.5 Add visible copyright/SPDX comments to verified original maintained Python/Lean/JavaScript sources, using existing provenance records to exclude third-party, uncertain-origin, and historical material. Verify language-sensitive first lines/directives and original runtime semantics; preserve all skill frontmatter, prompt bodies, upstream headers, and customized Codex structures. If generated executable attribution is necessary, update only maintained templates and use existing generation tools; verify generated instruction content and existing native/harness tests remain unchanged in behavior. Record the covered source scope and exclusions in the implementation report without creating a new provenance system.
+
+## 2. Python package licensing fidelity
+
+- [x] 2.1 Set modern custom proprietary license expression and the three legal-file entries in `pyproject.toml`, with setuptools `>=77.0.3`; update isolated staging and wheel validation in `tools/package_runtime.py`. Verify actual wheel `License-Expression`, `License-File` entries, source-exact legal bytes, and unchanged runtime dependency/identity checks through `tests/test_package.py` and the package validator.
+- [x] 2.2 Extend existing wheel test fixtures to stage all legal files and add rejection coverage for missing/altered legal files and contradictory metadata with recomputed valid checksums; verify these cases fail while clean wheels and existing legacy-contamination/unsafe-path regression tests pass.
+
+## 3. npm packaging and project-local propagation
+
+- [x] 3.1 Update npm file-based license metadata/file list and `tools/build_npm.py` assembly/archive checks to carry the three exact legal files at package root and payload alongside the validated wheel; extend `tests/test_npm.py` to inspect the actual tarball and reject missing, changed, or inconsistent legal content even with recomputed manifest hashes. Verify npm/runtime dependencies remain empty and development skills/workspace data remain excluded.
+- [x] 3.2 Extend existing installer mapping and explicit legal-file owned destinations to deploy the three files under `.mathtrace/docs/` for every supported harness; extend mapping tests to verify source-exact content and resolving references without changing user root licenses, harness assets, or customized Codex structures.
+- [x] 3.3 Extend existing installer tests for repeat installation, prior notice-only deployment updates, edited/unowned legal-file conflicts, and injected deployment failure recovery; verify ownership receipts and rollback include the legal files while user content and mathematical history remain intact.
+- [x] 3.4 Add local assertions that `private: true`, the rejecting `prepublishOnly` hook, and private-package build/archive/bundle checks remain enforced; verify a non-private fixture is rejected and inspect/run only the existing hook locally if needed, without attempting registry publication or introducing a bypass.
+
+## 4. Integrated local validation
+
+- [x] 4.1 Pack and execute the prepared installer in an independent temporary project using existing integration fixtures; verify all legal files remain readable and exact after the source/package/cache are unavailable, the user's root license and attribution documents survive, and the installed runtime identity and guide-path checks pass. Document fixture-based versus live provisioning coverage accurately.
+- [x] 4.2 Run `python -m pytest tests`, existing Node tests via `npm --prefix npm test`, `python tools/validate_package.py`, and `openspec validate --all`; resolve regressions and report results, permission-scope review, retained publication safeguards, and any outstanding owner/legal/provenance decisions. Do not archive, commit, or publish as part of implementation.

@@ -1,0 +1,5 @@
+# Merge into a chosen Hermes profile/user config, not a project auto-load file.
+# Set MATHTRACE_WORKSPACE to the absolute target project path before launching.
+skills:
+  external_dirs:
+    - "${MATHTRACE_WORKSPACE}/coding-harnesses/hermes-agent/skills"

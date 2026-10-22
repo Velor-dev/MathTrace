@@ -1,0 +1,27 @@
+{
+  "name": "mathtrace",
+  "files": {
+    "math/PROTOCOL.md": "2331d29ba538378d08c621511db6d6be983227380fec407572f930710a4b551d",
+    "math/help.md": "3afa4f0e8a1c5bb20f80f95018edd52e90607cc5d0f5708f4f1f9faaedb5d3b6",
+    "mcp_config.json": "d8e397af03b5b032f21d0aa967086f0c78b33c87b76f2e9898ae0a144df7de02",
+    "agents/math-adjudicator/agent.md": "882502c5529b93888505b4ec174c90b507235276ef6f7ab2ffdb5ae01bc5cf01",
+    "agents/math-computationalist/agent.md": "7f76e4bcb0efffb23dba78163b433ea562a195787427b5de7ed1c9753783ae22",
+    "agents/math-falsifier/agent.md": "2fe33e9fb71e160e52a43ce46ed23121a157065a94962d189c312e2d8d638b4e",
+    "agents/math-fidelity-auditor/agent.md": "da4495abde1e89b65a9377f05f4def95db74ba96ed9ed669223f3c7936dac84c",
+    "agents/math-formalizer/agent.md": "7eb582ae434f4728a0ff77f518bdd388f0a0234f959bc68551dd399658e6a257",
+    "agents/math-prover/agent.md": "d370c67b40afe76eef7010f0ddebe6b7e5dbef6d5ad6766f949a969e71e4ea2f",
+    "agents/math-referee/agent.md": "77eee67086c7297212c84016fb32932821aabf542fd8ab6152786f03a3f19361",
+    "agents/math-reproducer/agent.md": "9affbeea30360fae1df4175b2e18e1b371401573cb344cad0a5dd7f032742247",
+    "agents/math-scout/agent.md": "22fbc1876771ac6526d0be5c0b2dabb3e51af41b6bf6ebc3413b34f738301bde",
+    "agents/math-strategist/agent.md": "d32cd8160c698d55c1601440846aad63e5c689274ad6a2963fff3d15d1decea5",
+    "agents/math-theorem-checker/agent.md": "6adc405acf9a3edd09397f900d4a4600063511f44f01e412f00d9ad26a615e58",
+    "skills/mathtrace-help/SKILL.md": "4ce5a42dd0102eca0b6b3e8dc2e9b2bd0b95ed936c3fa65a08c3682125a6d090",
+    "skills/math-intake/SKILL.md": "9d079c40628f10c0d7c3b2d9f194c73afb6ef6ec80070ff9efb4927b4ec7a956",
+    "skills/math-research/SKILL.md": "eda5bf07aa37b8cbdc4590fd62a8eec888fc99eb0b10410605683393d7b47ac4",
+    "skills/math-audit/SKILL.md": "3ec0d241633b8c08dacf374cc96fb55dc10550e2ba30d3727774dc674944bef2",
+    "skills/math-formalize/SKILL.md": "75f22c42ffb8b0fdadddf67bea9b636b723dd288b474b5fc941a520f38b6b00d",
+    "skills/math-release/SKILL.md": "7b49ee2d854134c27f5349152ff3b2ebc3e0bd7ac5156a911b2ca09e0486dbc7",
+    "skills/math-progress/SKILL.md": "107491354e08e5a8b9041e06dabb0a72673ffaf93745f479678a55891f521161",
+    "skills/math-capture/SKILL.md": "68e81a102b9278e8b8f538191af72ae590a47c0950dd5740ca1bb2ce041db59c"
+  }
+}

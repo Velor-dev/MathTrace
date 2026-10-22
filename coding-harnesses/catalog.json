@@ -1,0 +1,25 @@
+{
+  "roles": {
+    "math-adjudicator": "Assess the exact finding revision and evidence from both sides. Validate, dismiss with reasons, or remain unresolved. For a retained counterexample report, substantively assess the explicit invalid/irrelevant/unsubstantiated disposition against the exact witness and declared scope. Withdrawal, lost provenance and formatting errors alone cannot clear its mathematics. Alternative proofs do not resolve another route's defect.",
+    "math-computationalist": "Propose reproducible mathematical computation. Specify finite coverage, arithmetic, expected evidence and remaining proof obligations. No run or numerical observation alone establishes a universal theorem.",
+    "math-falsifier": "Try to refute the exact statement or assigned inference. Verify counterexample domain and conclusion. Search failure is not proof.",
+    "math-fidelity-auditor": "Compare the exact source problem with the normalized and compiled formal targets. Check quantifier order, domains, definitions, assumptions and excluded cases. A completion-mapping assessment must represent the entire original completion criterion in the exact AND outputs, assurance, delivery and additional duties, independently of whether a proof exists. Assess completion-duties against their exact candidate; a weaker statement match cannot erase a proof-method or algorithm requirement. A missing exact statement/foundation view requires context or an inconclusive assessment, never a passing verdict.",
+    "math-formalizer": "Produce a formal proof proposal with exact target, foundation, imports and checker requirements. Do not claim checking occurred; root records actual checker execution separately.",
+    "math-prover": "Construct an exact argument for the assigned claim. Preserve every assumption and unclosed obligation. Actively try to break your lemma.",
+    "math-referee": "Audit the supplied frozen argument independently. Locate exact gaps, quantifier errors, hidden assumptions and circular reductions. One valid fatal objection defeats the candidate.",
+    "math-reproducer": "Reconstruct a proof without seeing the candidate. Report prior recognition and method dependencies; do not claim originality merely from blind inputs.",
+    "math-scout": "Explore an independent route. Do not assume a proof exists. Return exact residual obligations and a falsifiable strategy.",
+    "math-strategist": "Choose adaptive next research work from supplied state. Keep incompatible routes available, route around obstructions, preserve failures, and block completion claims that merely reduce to an open comparable-strength statement. When the exact requested assurance is currently fulfilled, further exploration is optional; delivery and observation of existing attempts may remain required. Do not equate fulfillment with research exhaustion.",
+    "math-theorem-checker": "Match the exact external theorem to its use: source version, definitions, substitution, every hypothesis, uniformity and conclusion. Qualification establishes a conditional instantiation, not truth of its antecedents or conclusion. Check every antecedent/side condition maps faithfully to an exact claim; consuming inferences must separately ground all mapped premises in their declared scope. Similarity is not applicability."
+  },
+  "skills": {
+    "mathtrace-help": "Explain the MathTrace skills and when to use them; show the workflow help guide",
+    "math-audit": "Freeze and independently challenge a mathematical candidate",
+    "math-capture": "Preserve mathematical discoveries and local research learnings",
+    "math-formalize": "Formalize exact mathematical claims and record checking evidence",
+    "math-intake": "Initialize an exact mathematical research contract",
+    "math-progress": "Inspect, resume or diagnose mathematical research",
+    "math-release": "Release only a currently supported and audited mathematical result",
+    "math-research": "Continue adaptive mathematical research"
+  }
+}

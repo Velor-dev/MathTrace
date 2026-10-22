@@ -1,0 +1,43 @@
+# Adaptive research coordination
+
+The root selects work; the runtime records exact intent and evidence. It never dispatches a model, interprets a worker vote as proof, or automatically restarts an unknown attempt. Mathematical support, findings, frozen candidates and release gates remain authoritative.
+
+Use `frontier` with an exact target claim. It returns simultaneous assessment, repair, obligation, candidate/audit/release and independent discovery/falsification/strategy work from canonical state. Each item has a stable key, exact work target, source selectors, basis hash and current statement/source permission. Open repair cannot erase complementary research. A visible discovery item whose statement permission is false needs repair/adjudication before materialization.
+
+Use `prepare_work` with target, key, instance, work_target, role, checks, mandate, rationale, expected and request_id. Optional independence/literature/background govern the worker packet; anchors bind route/obligation lineage outside it. Target is the campaign claim; work_target may be its explicitly linked subclaim. Root rationale is retained in the intent and excluded from the packet. The operation atomically commits an immutable `work_intent` and exact task before `reserve_native`.
+
+Request replay retrieves the original outcome and separately reports current conditions. A new request for unchanged lane/instance/specification/source basis retrieves the same task despite unrelated checkpoints or an old expected revision. A changed specification/basis returns `reassessment-required`, preserving historical work. Replaying that request preserves the reassessment outcome. It does not suggest reserving a mismatched old task. A new instance on an existing lane needs explicit parallel/successor lineage and purpose.
+
+`inspect_work` reports the exact task/packet, source-basis currentness, reservation/run/outcome records, producer attribution and source scope independently. Operator-reported completion does not establish observed terminal state. Withdrawal or retirement does not establish that an allocation stopped. `frontier` retains owned custom-key/subclaim work independently of current open-obligation lanes.
+
+Parallel work names the parent intent and its complementary purpose. It neither retries nor closes the parent's unknown attempt. Successor work names the actual result or attributed terminal protocol-failure of the exact parent task/packet and requires current producer evidence. New target holds still apply. Use `continue_work` for an exact unresolved context request, with added sources and an explicit exposure transition where necessary. It records the parent request's resolution before capturing the successor basis, avoiding immediate self-staleness. An extension is a new task, never retrospective repair of an earlier review.
+
+An active independently qualified [completion request](completion.md) defines when required research is fulfilled. Target-scoped frontiers use the full AND request containing that target; other same-contract claims do not become required outputs implicitly. Draft revisions remain separate. Current mathematics and requested delivery are distinct; sufficient mathematics marks further exploration optional while existing-attempt collection and new relevant findings remain visible. Historical fulfillment certificates retain their exact witnesses.
+
+Informed strategy automatically binds the portfolio's route/obligation roster and meaningful assessment/disposition boundaries. Its own task creation/reservation and unrelated checkpoints do not stale it. Blind discovery receives no portfolio, route-selection history or curated advice. Linked obligation work validates O.route=R, R.target=T and O.claim=Q; blind Q work is compiled directly against Q. Mapping review and actual mathematical grounding remain separate.
+
+# Source-bound routes and obligations
+
+`route_condition` separates recorded status from source-bound applicability. `route_transition` takes route, status, an artifact certificate, distinct external sources, rationale, reopen_condition, author, expected, exact previous_decision hash and stable request_id. Its immutable certificate/status commit is atomic and conveys no mathematical acceptance/refutation. Relevant changes expose reassessment; unrelated checkpoints do not. Replay retrieves the original certificate plus currentness.
+
+The basis cannot directly or transitively read this route's resulting mutable disposition. An authentic immutable prior event boundary may still supply historical evidence. `advisory_boundary` verifies exact revision/event_hash/target, event digest, typed subject/payload and outcome references. Legacy `route_status` dispositions need explicit source-bound reclassification for current planning; initial active registration is a scheduling declaration.
+
+Obligations record exact route target T, linked Q, optional relation_artifact and operational descriptors required-for-selected-route, heuristic-reduction or comparable-strength-residual. These are not mathematical implications/equivalences. Mapping review receives T/Q/relation evidence without route narrative; blind Q exploration remains scoped directly to Q. Unrelated support cannot satisfy an obligation. Relation evidence/support/qualification loss reopens it; closing a route does not discharge it.
+
+The [local learning pipeline](learning.md) preserves exact event/outcome boundaries, then requires root curation and explicit target admission before informed strategy selection. It creates no mathematical authority.
+
+# Terminal responses and quarantine
+
+Capture authenticates native allocation, task/packet, parent and public input before interpreting a completed response. Only strict result-contract errors become `native_failure`. Missing host files or unproven attribution do not become fabricated worker failures. Historical failure validation uses its recorded profile; new positive qualification uses the current exact profile.
+
+The first public DONE response is terminal. Every later row is retained by row position, including duplicate/missing indices, late running responses and additional input. Tails create producer conflicts/exposure. Nonempty unclassified terminal, earlier public or tail content creates an ordinary provisional claim-scope objection representing unresolved impact. It neither marks a claim false nor rewrites accepted alternatives. Fresh informed nonparty adjudication may establish truth-only scope or narrow the concern to one proof, restoring independent alternatives after appropriate clearance.
+
+Valid failing reviews are registered atomically before capture returns. Non-review intake invokes the same ingester: it registers unaccepted proposals/context or rolls back partial imports and retains `ingestion_failure` quarantine for narrow syntax/reference/input-contract errors. Store, transport and provenance faults are not mislabeled as worker syntax. Actual computation/formal checking never runs at intake.
+
+`assess_native_failure` and `assess_ingestion_failure` require an exact assessment artifact, scoped followups, reopening condition, expected revision and request identity. They close or reopen operational assessment only. They cannot dismiss the ordinary concern, certify termination from missing evidence, supply a pass or authorize retry.
+
+Origins retain exact source, result/receipt where present, producer task/run/capture/response hashes, validation profiles, qualification limits and a typed public-content selection. Scope certification follows static producer conditions and direct provenance challenges rather than target support controlled by that certification. The actual producer enters adjudication parties. Blank output creates no concern when no earlier/tail public content exists; valid contractual inconclusive output remains non-fatal.
+
+Use `recover_native` for pure canonical retrieval without current host logs or installed role bytes. It reports historical observation, current producer attribution and conflicts separately. `capture_native` can observe new evidence or recover an existing terminal when specific files disappear. Read historical evidence with its current limitations; recovery grants no mathematical acceptance or retry.
+
+Source-bound routes/relations and extraction/curation/admission are implemented. R3-H2 retains an actual qualified source review, isolated execution, new exact native receipt review and recovery at the recorded-input scope. Deterministic fixtures establish state/provenance distinctions without claiming mathematical truth or stronger host isolation. The [architectural decisions and audit records](architecture/decisions.md) record the assessment and limits.

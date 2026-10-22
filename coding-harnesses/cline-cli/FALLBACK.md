@@ -1,0 +1,13 @@
+# Cline CLI role binding and inline fallback
+
+Native delegation: Native named tools such as subagent_math_referee with prompt containing the complete exact exported packet. Profile supplies the unchanged role body; use actual exposed schema. Generic spawn_agent is only a broader compatibility fallback.
+
+The audited static binding is supplied; use [SETUP.md](SETUP.md) for version checks and named tools. Only if that binding is unavailable on the installed surface, use its documented fresh dynamic spawn with the full role text. The complete existing role definitions are in `coding-harnesses/shared/roles/`; [catalog.json](../catalog.json) lists their names and purposes.
+
+For a supported dynamic delegate, root reads exactly the selected role body and places its full text in the child instruction/prompt input exposed by the host. Append the **complete exported task packet unchanged**, not a summary or selected fields. Keep task_id and packet_hash intact. Use a new context, not a history-inheriting fork. Do not forward the root conversation, other verdicts, campaign/build archives or all skills. Omit model/effort overrides. Request the role's existing single-JSON-object response. Root retains actual returned handles and outputs with honest provenance; this is not a qualified Antigravity capture.
+
+Use only the actual tool schema available in the installed version/profile; this guide does not invent dynamic spawn parameters. If fresh delegation is absent or exposes incompatible context/settings, report that limitation and keep the relevant independent-review gate blocked. For Pi core, delegation is absent by design; an extension would be separately chosen work.
+
+Inline fallback: root may read the selected role prompt and perform explicitly labeled exploration or critique in the current context. Explain that this is root work. Do not label it an independent referee, reproducer, fidelity assessment or adjudication, and do not use it to satisfy independent audit/release/completion requirements. Preserve the original skills' behavior and stopping conditions; do not silently flatten required independent work.
+
+Read [POLICY](../shared/POLICY.md) for the unchanged mathematical and capture limits. Worker skills, providerId and modelId are omitted. Declaring skills, even [], adds a skills tool. Empty tools remain empty in the audited runtime filter; base runtime model and thinking/effort are inherited. Verify installed-version discovery and effective context/tools/settings before dispatch. Generic Plan/Act subagents have broader tools; prompt restrictions and capture gates remain mandatory. No capture backend.

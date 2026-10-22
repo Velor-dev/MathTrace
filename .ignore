@@ -1,0 +1,11 @@
+# Active-tree ripgrep discovery, including workspaces without Git.
+# Deliberate evidence inspection: rg --no-ignore <pattern> <exact evidence directory>
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+/build/
+/dist/
+/work/
+/.math/

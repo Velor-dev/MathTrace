@@ -1,0 +1,77 @@
+[
+  {
+    "name": "send_message",
+    "description": "Send a message to another agent. This tool can be used to communicate with subagents, peer agents, etc. Do not use this tool to communicate with the user.",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Message": {
+          "description": "The message content.",
+          "type": "string"
+        },
+        "Recipient": {
+          "description": "The recipient ID to send the message to, e.g. a subagent conversation ID.",
+          "type": "string"
+        },
+        "toolAction": {
+          "description": "Brief 2-5 word phrase in -ing form describing the specific action. Capitalize like a sentence. Some examples: 'Analyzing directory', 'Searching the web', 'Checking git status', 'Running tests', 'Searching code'.",
+          "type": "string"
+        },
+        "toolSummary": {
+          "description": "Brief 2-5 word noun phrase describing the specific task. Capitalize like a sentence. Some examples: 'Directory analysis', 'Web search', 'Git status check', 'Test execution', 'Code search'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Recipient",
+        "Message",
+        "toolSummary",
+        "toolAction"
+      ],
+      "type": "object"
+    }
+  },
+  {
+    "name": "manage_task",
+    "description": "Manage background tasks. Use this tool to list running tasks or interact with tasks that were sent to the background.\n\nActions:\n- 'list': List all currently running background tasks\n- 'kill': Cancel the task's execution\n- 'status': Check the task's current status and log file location\n- 'send_input': Send input to a running task\n\nWhen mentioning tasks to the user, avoid using full task IDs and start timestamps; keep them human-readable.",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "Action": {
+          "description": "The action to perform: 'list' (list all running tasks), 'kill' (cancel the task), 'status' (check the task status and log URI), 'send_input' (send input to a running task).",
+          "enum": [
+            "list",
+            "kill",
+            "status",
+            "send_input"
+          ],
+          "type": "string"
+        },
+        "Input": {
+          "description": "The input to send to the task. Required when Action is 'send_input'.",
+          "type": "string"
+        },
+        "TaskId": {
+          "description": "The task ID to manage. Required when Action is 'kill', 'status', or 'send_input'.",
+          "type": "string"
+        },
+        "toolAction": {
+          "description": "Brief 2-5 word phrase in -ing form describing the specific action. Capitalize like a sentence. Some examples: 'Analyzing directory', 'Searching the web', 'Checking git status', 'Running tests', 'Searching code'.",
+          "type": "string"
+        },
+        "toolSummary": {
+          "description": "Brief 2-5 word noun phrase describing the specific task. Capitalize like a sentence. Some examples: 'Directory analysis', 'Web search', 'Git status check', 'Test execution', 'Code search'.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Action",
+        "toolSummary",
+        "toolAction"
+      ],
+      "type": "object"
+    }
+  }
+]

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathtrace"
+version = "0.1.0"
+description = "Evidence-governed mathematical research workflow"
+requires-python = ">=3.11"
+dependencies = []
+authors = [{name = "Velor-dev"}]
+license = "LicenseRef-MathTrace-Proprietary"
+license-files = ["LICENSE"]
+
+[project.scripts]
+mathtrace = "mathtrace.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mathtrace*"]
+
+[tool.setuptools.package-data]
+mathtrace = ["lean_inspector.lean"]
+

@@ -1,0 +1,25 @@
+{
+  "name": "mathtrace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Project-local MathTrace installer",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "mathtrace": "bin/install.cjs"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "payload/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "prepublishOnly": "node -e \"throw Error('Publication is outside this change')\""
+  },
+  "author": "Velor-dev"
+}
