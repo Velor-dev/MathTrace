@@ -53,7 +53,7 @@ The license SHALL reserve general modification, sublicensing, resale, republishi
 - **AND** the license does not grant general public redistribution of installed skills or agents
 
 ### Requirement: Platform and third-party rights remain distinct
-The license SHALL accommodate GitHub/npm service rights necessary for the intended public distribution without granting general redistribution rights. Third-party materials SHALL retain their applicable licenses and attribution, with attribution in the existing README.md identifying included upstream materials separately from external prerequisites and downloaded distributions.
+The license SHALL accommodate GitHub/npm service rights necessary for the intended public distribution without granting general redistribution rights. Third-party materials SHALL retain their applicable licenses and attribution, with the OpenSpec development-skill MIT notice in a separate section of LICENSE, explicitly limited to those skills. External prerequisites and downloaded distributions retain their own notices.
 
 #### Scenario: Repository includes OpenSpec development skills
 - **WHEN** MIT-licensed OpenSpec skills are retained in the public source distribution

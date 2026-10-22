@@ -177,7 +177,7 @@ Copyright © 2026 Velor-dev. Public project author/developer: [Velor-dev](https:
 MathTrace is proprietary and source-available, with free personal, academic,
 and commercial use under [LICENSE](LICENSE). The license permits installation
 and necessary project-local/internal operational copies, while reserving general
-modification and redistribution rights. See the third-party attribution below.
+modification and redistribution rights. The separate OpenSpec development-skill notice is included in [LICENSE](LICENSE).
 
 When publishing your own project, exclude installed MathTrace software assets
 (including its runtime, skills, agents, and copied guides) and direct users to
@@ -188,55 +188,3 @@ from public redistribution. These permissions do not override third-party terms.
 
 The official npm package is `mathtrace`. Publication requires an assembled,
 integrity-verified payload; package publication does not create a GitHub release.
-
-## Third-party attribution
-
-SOURCE REPOSITORY ONLY: OpenSpec development skills
-The retained .agents/skills/openspec-* skill frontmatter identifies OpenSpec
-1.14.3, MIT. Upstream: https://github.com/Fission-AI/OpenSpec/tree/v1.14.3
-License source: https://github.com/Fission-AI/OpenSpec/blob/v1.14.3/LICENSE
-These development skills are excluded from the runtime wheel/npm payload.
-Their applicable upstream license follows; inclusion of this notice in an
-artifact does not mean those skills are bundled there.
-
-MIT License
-
-Copyright (c) 2024 OpenSpec Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-DOWNLOADED SEPARATELY: Lean toolchain
-The installer downloads the pinned official Lean distribution; it is not
-bundled in the MathTrace wheel/npm archive. Lean is Apache-2.0 licensed.
-https://github.com/leanprover/lean4/blob/v4.30.0/LICENSE
-Official archives also contain LICENSES for bundled third-party components;
-retain and consult those complete files in the downloaded toolchain. This
-summary does not replace their terms.
-
-EXTERNAL PREREQUISITES, NOT BUNDLED
-Python, Node.js, coding harness applications, and Pi's upstream subagent
-extension are separately installed and retain their own terms. Harness names
-identify compatibility, not MathTrace ownership of those applications.
-Optional Bubblewrap (LGPL-2.1) and libseccomp are separately provisioned;
-consult their own installed notices. They are not required by Direct Execution.
-https://github.com/containers/bubblewrap/blob/main/COPYING
-
-The MathTrace runtime has no declared third-party Python dependencies and the
-npm installer has no production npm dependencies. Build tooling is external.

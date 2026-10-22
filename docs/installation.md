@@ -83,6 +83,6 @@ and root license. Package preparation alone does not publish anything. The prepu
 an assembled, integrity-verified payload; publish only an explicitly approved artifact.
 
 Updates remove obsolete MathTrace notice copies only when unchanged and previously
-owned. Edited or unowned conflicts are reported and preserved. Source-repository
-third-party attribution and the OpenSpec MIT license text are retained in README.md;
+owned. Edited or unowned conflicts are reported and preserved. The
+OpenSpec development-skill MIT notice is retained separately in LICENSE;
 Lean distributions retain their own LICENSE and LICENSES files.
