@@ -129,3 +129,26 @@ class ToolchainInstallTests(unittest.TestCase):
         progress.finish()
         output = buf.getvalue()
         self.assertIn('1.0 MB', output)
+
+    def test_extract_distribution_emits_status_messages(self):
+        buf = io.StringIO()
+        archive = self.root / 'extract_test.zip'
+        archive.write_bytes(self.archive)
+        marker = execution_target()[0]
+        root, files, _ = extract_distribution(archive, self.root, self.hashed, target_platform=marker, stream=buf)
+        output = buf.getvalue()
+        self.assertIn('-> Extracting Lean distribution (2 files)...', output)
+        self.assertIn('-> Verifying toolchain integrity against archive manifest...', output)
+        self.assertIn('Verified toolchain integrity', output)
+
+    def test_install_lean_emits_download_and_extraction_status(self):
+        buf = io.StringIO()
+        with patch('mathtrace.toolchain.urllib.request.urlopen', side_effect=self.download_fixture):
+            identifier = Toolchains(self.store).install_lean(self.version, stream=buf)
+        output = buf.getvalue()
+        self.assertIn(f'Downloaded Lean {self.version}', output)
+        self.assertIn('-> Extracting Lean distribution', output)
+        self.assertIn('-> Verifying toolchain integrity against archive manifest...', output)
+        self.assertIn('Verified toolchain integrity', output)
+        record = self.store.get(identifier)
+        self.assertEqual(self.store.status(identifier), 'installed')

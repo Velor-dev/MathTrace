@@ -79,3 +79,16 @@ class BootstrapTests(unittest.TestCase):
                 bootstrap.provision(self.root, self.version, 'direct')
         with Store(self.root / '.math/state.sqlite') as store:
             self.assertEqual(store.records('toolchain'), [])
+
+
+    def test_fresh_provision_does_not_call_verify_toolchain_redundantly(self):
+        with patch.object(bootstrap, 'verify_toolchain', wraps=bootstrap.verify_toolchain) as mock_verify, \
+             patch('mathtrace.toolchain.urllib.request.urlopen', side_effect=self.download):
+            first = bootstrap.provision(self.root, self.version, 'direct')
+            mock_verify.assert_not_called()
+            second = bootstrap.provision(self.root, self.version, 'direct')
+            self.assertEqual(mock_verify.call_count, 1)
+            verified = bootstrap.provision(self.root, self.version, 'direct', verify_only=True)
+            self.assertEqual(mock_verify.call_count, 2)
+            self.assertEqual(first['toolchain'], second['toolchain'])
+            self.assertEqual(verified['toolchain'], first['toolchain'])

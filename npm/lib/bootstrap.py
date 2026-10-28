@@ -25,7 +25,6 @@ def provision(project, version, mode, *, verify_only=False):
             raise StateError('No verified pinned toolchain in campaign')
         else:
             identifier = Toolchains(store).install_lean(version, execution_mode=mode)
-            verify_toolchain(store.get(identifier))
         return {'toolchain': identifier, 'health': store.health(), 'target': target}
 
 

@@ -95,6 +95,15 @@ class DownloadProgress:
         self.stream.flush()
 
 
+def _emit_status(message: str, stream=None) -> None:
+    target = stream or sys.stderr
+    try:
+        target.write(message)
+    except UnicodeEncodeError:
+        target.write(message.replace('✓', 'OK'))
+    target.flush()
+
+
 def sha256(path: Path) -> str:
     with path.open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
@@ -122,7 +131,8 @@ def verify_toolchain(record: dict) -> dict:
             'platform': data['platform'], 'release_digest': data['release_digest']}
 
 
-def extract_distribution(archive: Path, directory: Path, expected_digest: str, *, target_platform: str | None = None) -> tuple[Path, dict, str]:
+def extract_distribution(archive: Path, directory: Path, expected_digest: str, *,
+                         target_platform: str | None = None, stream=None) -> tuple[Path, dict, str]:
     """Publish a new verified tree without merging into any prior installation."""
     directory = directory.resolve()
     with tempfile.TemporaryDirectory(prefix='.lean-stage-', dir=directory) as temporary:
@@ -132,7 +142,10 @@ def extract_distribution(archive: Path, directory: Path, expected_digest: str, *
         expected_files = {}
         destinations = set()
         with zipfile.ZipFile(archive) as package:
-            for item in package.infolist():
+            infolist = package.infolist()
+            file_count = sum(1 for item in infolist if not item.is_dir())
+            _emit_status(f"-> Extracting Lean distribution ({file_count:,} files)...\n", stream=stream)
+            for item in infolist:
                 relative = PurePosixPath(item.filename)
                 destination = (staged / relative.as_posix()).resolve()
                 key = relative.as_posix().rstrip('/')
@@ -160,6 +173,7 @@ def extract_distribution(archive: Path, directory: Path, expected_digest: str, *
             for binary in staged.rglob('bin/*'):
                 if binary.is_file():
                     binary.chmod(0o755)
+        _emit_status("-> Verifying toolchain integrity against archive manifest...\n", stream=stream)
         actual_files = {p.relative_to(staged).as_posix(): p for p in staged.rglob('*') if p.is_file()}
         if set(actual_files) != set(expected_files):
             raise StateError('Extracted Lean file set differs from the verified archive')
@@ -178,6 +192,7 @@ def extract_distribution(archive: Path, directory: Path, expected_digest: str, *
             raise StateError('Lean archive contains files outside the selected distribution root')
         files = {path.relative_to(toolchain_root).as_posix(): expected_files[name]
                  for name, path in actual_files.items()}
+        _emit_status("   [✓] Verified toolchain integrity\n", stream=stream)
         # A unique destination leaves existing installed versions and records
         # intact. Same-parent rename atomically publishes the complete tree.
         installed = directory / ('distribution-' + uuid.uuid4().hex)
@@ -189,7 +204,7 @@ class Toolchains:
     def __init__(self, store):
         self.store = store
 
-    def install_lean(self, version: str, *, execution_mode: str | None = None) -> str:
+    def install_lean(self, version: str, *, execution_mode: str | None = None, stream=None) -> str:
         if not re.fullmatch(r'v\d+\.\d+\.\d+(?:-rc\d+)?', version):
             raise StateError('Specify an exact Lean release tag, not latest')
         marker, target = execution_target(execution_mode)
@@ -215,14 +230,15 @@ class Toolchains:
                 headers = getattr(response, 'headers', None)
                 content_length = headers.get('Content-Length') if headers else None
                 total_bytes = int(content_length) if (content_length and content_length.isdigit()) else None
-                progress = DownloadProgress(total_bytes, label=f'Lean {version}')
+                progress = DownloadProgress(total_bytes, label=f'Lean {version}', stream=stream)
                 while chunk := response.read(1024 * 1024):
                     output.write(chunk)
                     progress.update(len(chunk))
                 progress.finish()
         if sha256(archive) != expected.split(':')[1]:
             raise StateError('Lean distribution digest mismatch')
-        root, files, archive_file_set_hash = extract_distribution(archive, directory, expected.split(':')[1], target_platform=marker)
+        root, files, archive_file_set_hash = extract_distribution(archive, directory, expected.split(':')[1],
+                                                                  target_platform=marker, stream=stream)
         executable = 'bin/lean.exe' if marker == 'windows' else 'bin/lean'
         with self.store.transaction():
             identifier = self.store.put('toolchain', {'root': str(root.resolve()),

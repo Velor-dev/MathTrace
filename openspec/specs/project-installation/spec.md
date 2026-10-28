@@ -52,6 +52,7 @@ The installer SHALL bundle a version-matched verified Python wheel and the selec
 - **WHEN** installation initiates Python runtime environment creation, wheel installation, or Lean 4 toolchain downloading and extraction
 - **THEN** user-visible status progress messages are emitted to stdout before and during each operation
 - **AND** official Lean distribution archive downloads emit continuous real-time progress indicators displaying transferred bytes, total size, percentage, and transfer speed
+- **AND** toolchain archive extraction and integrity verification emit clear user-visible status messages before extracting files and during validation
 - **AND** the terminal does not remain silently stalled during network downloads or archive extraction
 
 
@@ -81,11 +82,12 @@ The installer SHALL NOT execute host harness binary checks or require host CLI p
 
 ### Requirement: Existing runtime and toolchain integrity
 
-The installer SHALL use existing MathTrace state initialization and publisher-verified pinned Lean provisioning mechanisms using Direct Execution. The npm package SHALL NOT offer, probe, or download optional Bubblewrap sandbox components or require WSL during project installation. It SHALL preserve existing campaign events, receipts, toolchains, mathematical verification gates, and historical execution identities.
+The installer SHALL use existing MathTrace state initialization and publisher-verified pinned Lean provisioning mechanisms using Direct Execution. The npm package SHALL NOT offer, probe, or download optional Bubblewrap sandbox components or require WSL during project installation. It SHALL preserve existing campaign events, receipts, toolchains, mathematical verification gates, and historical execution identities. Fresh provisioning SHALL validate the extracted distribution against the archive manifest without executing redundant immediate post-installation verification sweeps on unchanged newly extracted trees.
 
 #### Scenario: Fresh project bootstrap
 - **WHEN** no default campaign database exists
 - **THEN** installation initializes it and provisions the supported exact Lean release for the selected execution target
+- **AND** newly extracted toolchain trees are verified against archive digests without immediate redundant file tree re-verification sweeps
 - **AND** it creates no mathematical contract, proof claim, independent-review qualification, or release acceptance
 
 #### Scenario: Existing project or repeated installation
