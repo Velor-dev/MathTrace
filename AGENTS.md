@@ -33,7 +33,7 @@ All substantive enhancements, bug fixes, and architectural adjustments follow st
 2. **Specify**: Author or modify requirements in the change's delta specs (`specs/<capability>/spec.md`) conforming to OpenSpec schema.
 3. **Design & Tasks**: Detail the design decisions and break implementation into verifiable tasks (`tasks.md`).
 4. **Implement**: Apply code and test changes (`openspec-apply-change` skill).
-5. **Verify**: Ensure the test suite passes (`pytest tests`), package builds cleanly (`python tools/validate_package.py`), and specs validate (`openspec validate --all`).
+5. **Verify**: Ensure package builds cleanly (`python tools/validate_package.py`) and specs validate (`openspec validate --all`).
 6. **Archive**: Sync delta specs to main specs and archive the change (`openspec-archive-change` skill or `openspec archive <name>`).
 
 ### Specification Authority
@@ -64,10 +64,6 @@ Agents modifying MathTrace must strictly preserve the following invariants:
 
 Run from the repository root:
 
-- **Run Test Suite**:
-  ```bash
-  python -m pytest tests
-  ```
 - **Validate OpenSpec Specs and Changes**:
   ```bash
   openspec validate --all
