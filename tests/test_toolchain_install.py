@@ -11,7 +11,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from mathtrace.store import Store, StateError
-from mathtrace.toolchain import Toolchains, verify_toolchain, extract_distribution, execution_target
+from mathtrace.toolchain import Toolchains, verify_toolchain, extract_distribution, execution_target, DownloadProgress
 
 
 class ToolchainInstallTests(unittest.TestCase):
@@ -41,7 +41,9 @@ class ToolchainInstallTests(unittest.TestCase):
             return io.BytesIO(json.dumps({'assets': [{'name': self.name,
                 'digest': 'sha256:' + self.hashed,
                 'browser_download_url': f'https://github.com/leanprover/lean4/releases/download/{self.version}/{self.name}'}]}).encode())
-        return io.BytesIO(self.archive)
+        res = io.BytesIO(self.archive)
+        res.headers = {'Content-Length': str(len(self.archive))}
+        return res
 
     def test_install_never_admits_preexisting_unpublished_files(self):
         old = self.root / 'toolchains' / self.version / 'distribution' / self.prefix / 'lib/lean/Injected.olean'
@@ -96,3 +98,34 @@ class ToolchainInstallTests(unittest.TestCase):
         root,_,_ = extract_distribution(archive,self.root,hashlib.sha256(archive.read_bytes()).hexdigest(),target_platform='linux')
         self.assertTrue((root/'bin/lean').stat().st_mode & 0o111)
         self.assertTrue((root/'bin/leanchecker').stat().st_mode & 0o111)
+
+    def test_download_progress_tty_rendering(self):
+        buf = io.StringIO()
+        buf.isatty = lambda: True
+        progress = DownloadProgress(total_bytes=1000, stream=buf, label='TestTool')
+        progress.update(250, force=True)
+        progress.update(500, force=True)
+        progress.finish()
+        output = buf.getvalue()
+        self.assertIn('TestTool', output)
+        self.assertIn('%', output)
+        self.assertTrue(output.endswith('\n'))
+
+    def test_download_progress_non_tty_rendering(self):
+        buf = io.StringIO()
+        buf.isatty = lambda: False
+        progress = DownloadProgress(total_bytes=1000, stream=buf, label='TestTool')
+        progress.update(500, force=True)
+        progress.finish()
+        output = buf.getvalue()
+        self.assertIn('Downloading TestTool: 50%', output)
+        self.assertIn('Downloaded TestTool', output)
+
+    def test_download_progress_indeterminate(self):
+        buf = io.StringIO()
+        buf.isatty = lambda: True
+        progress = DownloadProgress(total_bytes=None, stream=buf, label='TestTool')
+        progress.update(1024 * 1024, force=True)
+        progress.finish()
+        output = buf.getvalue()
+        self.assertIn('1.0 MB', output)

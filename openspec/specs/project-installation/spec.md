@@ -51,6 +51,7 @@ The installer SHALL bundle a version-matched verified Python wheel and the selec
 #### Scenario: Visible provisioning progress
 - **WHEN** installation initiates Python runtime environment creation, wheel installation, or Lean 4 toolchain downloading and extraction
 - **THEN** user-visible status progress messages are emitted to stdout before and during each operation
+- **AND** official Lean distribution archive downloads emit continuous real-time progress indicators displaying transferred bytes, total size, percentage, and transfer speed
 - **AND** the terminal does not remain silently stalled during network downloads or archive extraction
 
 

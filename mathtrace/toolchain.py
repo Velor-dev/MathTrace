@@ -14,12 +14,85 @@ import re
 import stat
 import sys
 import tempfile
+import time
 import uuid
 import urllib.request
 import zipfile
 from pathlib import Path, PurePosixPath
 
 from .store import StateError, digest
+
+
+class DownloadProgress:
+    """Format and stream download progress to stderr without polluting stdout."""
+
+    def __init__(self, total_bytes: int | None = None, stream=None, label: str = 'Lean 4'):
+        self.total_bytes = total_bytes if (total_bytes and total_bytes > 0) else None
+        self.transferred = 0
+        self.stream = stream or sys.stderr
+        self.label = label
+        self.start_time = time.monotonic()
+        self.last_update = 0.0
+        self.is_tty = hasattr(self.stream, 'isatty') and self.stream.isatty()
+        self.last_pct_bucket = -1
+
+    def update(self, chunk_len: int, force: bool = False):
+        self.transferred += chunk_len
+        now = time.monotonic()
+        if not force and (now - self.last_update < 0.1):
+            return
+        self.last_update = now
+        elapsed = max(now - self.start_time, 0.001)
+        speed = self.transferred / elapsed
+
+        mb_transferred = self.transferred / (1024 * 1024)
+        mb_speed = speed / (1024 * 1024)
+
+        if self.total_bytes:
+            mb_total = self.total_bytes / (1024 * 1024)
+            pct = min(int((self.transferred / self.total_bytes) * 100), 100)
+            eta = max(0, int((self.total_bytes - self.transferred) / max(speed, 1)))
+            eta_str = f"{eta // 60:02d}:{eta % 60:02d}"
+
+            if self.is_tty:
+                bar_width = 24
+                filled = int(bar_width * pct / 100)
+                try:
+                    bar = '█' * filled + '░' * (bar_width - filled)
+                    text = f"\r   [{bar}] {pct:3d}% ({mb_transferred:5.1f} MB / {mb_total:5.1f} MB) {mb_speed:4.1f} MB/s [{eta_str}]"
+                    self.stream.write(text)
+                except UnicodeEncodeError:
+                    bar = '=' * filled + '-' * (bar_width - filled)
+                    text = f"\r   [{bar}] {pct:3d}% ({mb_transferred:5.1f} MB / {mb_total:5.1f} MB) {mb_speed:4.1f} MB/s [{eta_str}]"
+                    self.stream.write(text)
+                self.stream.flush()
+            else:
+                bucket = pct // 20
+                if bucket != self.last_pct_bucket or force:
+                    self.last_pct_bucket = bucket
+                    self.stream.write(f"-> Downloading {self.label}: {pct}% ({mb_transferred:.1f} MB / {mb_total:.1f} MB) at {mb_speed:.1f} MB/s\n")
+                    self.stream.flush()
+        else:
+            if self.is_tty:
+                text = f"\r   Downloading {self.label}: {mb_transferred:5.1f} MB ({mb_speed:4.1f} MB/s)"
+                self.stream.write(text)
+                self.stream.flush()
+            else:
+                if now - self.last_update >= 5.0 or force:
+                    self.stream.write(f"-> Downloading {self.label}: {mb_transferred:.1f} MB ({mb_speed:.1f} MB/s)\n")
+                    self.stream.flush()
+
+    def finish(self):
+        self.update(0, force=True)
+        mb_total = (self.total_bytes or self.transferred) / (1024 * 1024)
+        if self.is_tty:
+            try:
+                self.stream.write(f"\r   [✓] Downloaded {self.label} ({mb_total:.1f} MB)\n")
+            except UnicodeEncodeError:
+                self.stream.write(f"\r   [OK] Downloaded {self.label} ({mb_total:.1f} MB)\n")
+        else:
+            self.stream.write(f"-> Downloaded {self.label} ({mb_total:.1f} MB)\n")
+        self.stream.flush()
 
 
 def sha256(path: Path) -> str:
@@ -139,8 +212,14 @@ class Toolchains:
         archive = directory / asset['name']
         if not archive.is_file() or sha256(archive) != expected.split(':')[1]:
             with urllib.request.urlopen(download, timeout=120) as response, archive.open('wb') as output:
+                headers = getattr(response, 'headers', None)
+                content_length = headers.get('Content-Length') if headers else None
+                total_bytes = int(content_length) if (content_length and content_length.isdigit()) else None
+                progress = DownloadProgress(total_bytes, label=f'Lean {version}')
                 while chunk := response.read(1024 * 1024):
                     output.write(chunk)
+                    progress.update(len(chunk))
+                progress.finish()
         if sha256(archive) != expected.split(':')[1]:
             raise StateError('Lean distribution digest mismatch')
         root, files, archive_file_set_hash = extract_distribution(archive, directory, expected.split(':')[1], target_platform=marker)

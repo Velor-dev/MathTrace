@@ -1,6 +1,6 @@
 {
   "name": "mathtrace",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "description": "Project-local MathTrace installer",
   "license": "SEE LICENSE IN LICENSE",

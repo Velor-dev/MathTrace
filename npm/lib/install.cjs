@@ -130,7 +130,8 @@ function install(project,bundle,args,deps={}) {
     const helper=F.safe(bundle.base,'lib/bootstrap.py');
     const bootArgs=['-I',helper,bundle.manifest.lean,mode];
     status?.(`Provisioning Lean 4 verification engine (${bundle.manifest.lean})...`);
-    const provision=JSON.parse(exec(python,bootArgs,{cwd:root,env,timeout:1200000}));
+    const stdio=args.json ? ['pipe','pipe','pipe'] : ['pipe','pipe','inherit'];
+    const provision=JSON.parse(exec(python,bootArgs,{cwd:root,env,timeout:1200000,stdio}));
     status?.('Finalizing installation and verifying state...');
     if(!provision.health?.ok)throw Error('Campaign health verification failed');
     const receipt={schema:1,project:root,version:bundle.manifest.version,harness:map.h.id,codexSkills:map.codexSkills,runtime:relative,basePython:probe.base,wheel:bundle.manifest.files[bundle.manifest.wheel],sectionHash:map.merged.sectionHash,files:planned.owned,...provision,mode};

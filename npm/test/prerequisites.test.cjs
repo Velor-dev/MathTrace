@@ -44,3 +44,9 @@ test('Claude combined loading honors existing user settings without modifying th
  assert.ok(P.external(h,root,{home:root,env:{}}));
  assert.equal(fs.readFileSync(path.join(root,'.claude/settings.json'),'utf8'),settings);assert.equal(fs.readFileSync(path.join(root,'CLAUDE.md'),'utf8'),'owner');
 });
+
+test('execute supports stdio piping and options', () => {
+ const code = 'process.stderr.write("test stderr\\n"); console.log(JSON.stringify({ok: true}));';
+ const out = P.execute(process.execPath, ['-e', code], { stdio: ['pipe', 'pipe', 'pipe'] });
+ assert.deepEqual(JSON.parse(out), { ok: true });
+});
