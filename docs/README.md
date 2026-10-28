@@ -45,3 +45,42 @@ Run from the workspace root; read each helper's scope before executing it:
 | `tools/validate_lean.py` | Explicit Lean boundary fixtures against the provisioned validation database |
 | `tools/validate_canonical_formal.py` | Isolated ordinary-module receipt and invalidation fixtures |
 | `tools/probe_compiled_semantics.py` | Specialized unmocked semantic-channel prototype evidence |
+
+## Local commit checks
+
+Install the locked development-only Ruff tool with existing uv:
+
+```sh
+uv sync --locked --only-group quality --inexact
+git config --local core.hooksPath .githooks
+```
+
+The pre-commit hook checks only staged added/modified/renamed Python files,
+using their staged contents and staged pyproject.toml. Deleted files and
+non-Python-only commits do not run Ruff. Merge conflicts fail the check.
+Ruff lint uses E4/E7/E9/F (basic errors and Pyflakes), followed by format --check.
+No files or staged bytes are fixed automatically. Partially staged changes are
+preserved. Existing files are not reformatted in bulk; changed Python files must
+pass the configured checks when committed.
+
+Checks run offline with the installed tool and the existing uv.lock authority.
+The installed Ruff version must match the staged lockfile; mismatches fail closed.
+No LLM, GitHub Actions, full tests, Lean provisioning, or npm checks run on commit.
+A missing local environment/tool fails with an error; rerun the setup command.
+The inexact setup keeps other already-installed developer tools, including pytest.
+Install uv separately if it is unavailable. The repository-owned pre-commit
+file must retain its executable Git mode when committed (including from Windows). Other clones must opt in using the
+commands above. No pre-push hook is installed. To disable this local setting:
+
+```sh
+git config --local --unset core.hooksPath
+```
+
+To fix only specific files, review and run Ruff manually before staging:
+
+```sh
+uv run --locked --offline --no-sync --group quality ruff check path/to/file.py
+uv run --locked --offline --no-sync --group quality ruff format path/to/file.py
+```
+
+The existing full regression, package, npm, and OpenSpec checks remain separate.

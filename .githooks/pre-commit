@@ -1,0 +1,7 @@
+#!/bin/sh
+# Local only: no downloads, fixes, tests, or remote services during commits.
+if ! command -v uv >/dev/null 2>&1; then
+    echo "pre-commit: uv is required; see docs/README.md (Local commit checks)" >&2
+    exit 1
+fi
+exec uv run --locked --offline --no-sync --group quality python tools/check_staged.py
