@@ -125,11 +125,12 @@ for(const h of b.manifest.harnesses){
  for(const name of ['LICENSE']){
   if(!desired['.mathtrace/docs/'+name]?.equals(fs.readFileSync(path.join(base,name))))throw Error('legal file differs: '+h.id+' '+name);
  }
- for(const link of desired['coding-harnesses/README.md'].toString().matchAll(/\]\(([^)]+)\)/g)){
+ for(const link of desired['.mathtrace/harness/README.md'].toString().matchAll(/\]\(([^)]+)\)/g)){
   if(link[1].includes('://'))continue;
-  const target=path.posix.normalize(path.posix.join('coding-harnesses',link[1]));
+  const target=path.posix.normalize(path.posix.join('.mathtrace/harness',link[1]));
   if(!desired[target])throw Error('installed overview reference missing '+target);
  }
+ if(Object.keys(desired).some(n=>n.startsWith('coding-harnesses/')))throw Error('unclean root with coding-harnesses '+h.id);
  let references=0;
  for(const [name,bytes] of Object.entries(desired)){
   if(!ownedDestination(name,h.id))throw Error('unbounded '+h.id+' destination '+name);

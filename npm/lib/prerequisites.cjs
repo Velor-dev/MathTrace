@@ -38,7 +38,9 @@ function external(harness,root,{home=os.homedir(),env=process.env}={}) {
   }
   if(harness.id==='hermes-agent') {
     const config=path.join(env.HERMES_HOME || path.join(home,'.hermes'),'config.yaml');
-    if(!fs.existsSync(config))throw Error('Configure Hermes skills.external_dirs in '+config+' to '+path.join(root,'coding-harnesses/hermes-agent/skills')+' before rerunning. No profile file was changed.');
+    const expected=path.join(root,'.mathtrace/harness/skills');
+    const legacyExpected=path.join(root,'coding-harnesses/hermes-agent/skills');
+    if(!fs.existsSync(config))throw Error('Configure Hermes skills.external_dirs in '+config+' to '+expected+' before rerunning. No profile file was changed.');
     const content=fs.readFileSync(config,'utf8');
     let dirs;
     try{dirs=JSON.parse(content).skills?.external_dirs;}catch{
@@ -47,9 +49,8 @@ function external(harness,root,{home=os.homedir(),env=process.env}={}) {
       const values=block?.match(/^[ \t]+external_dirs:\s*\r?\n((?:[ \t]+-[^\n]*\r?\n?)*)/m)?.[1];
       dirs=values?.split(/\r?\n/).filter(l=>l.trim()).map(l=>l.replace(/^\s*-\s*/,'').trim().replace(/^['"]|['"]$/g,''));
     }
-    const expected=path.join(root,'coding-harnesses/hermes-agent/skills');
     const expanded=(Array.isArray(dirs)?dirs:[]).filter(d=>typeof d==='string').map(d=>d.replace(/\$\{MATHTRACE_WORKSPACE\}/g,env.MATHTRACE_WORKSPACE || '').replace(/^~(?=[/\\])/,home));
-    if(!Array.isArray(dirs)||!expanded.some(d=>path.isAbsolute(d)&&path.resolve(d)===expected))throw Error('Hermes skills.external_dirs must verifiably include '+expected+'. Set MATHTRACE_WORKSPACE if using the example binding, keep the project as working directory, and rerun. Complex/unrecognized YAML requires an equivalent simple documented setting.');
+    if(!Array.isArray(dirs)||!expanded.some(d=>path.isAbsolute(d)&&(path.resolve(d)===expected || path.resolve(d)===legacyExpected)))throw Error('Hermes skills.external_dirs must verifiably include '+expected+'. Set MATHTRACE_WORKSPACE if using the example binding, keep the project as working directory, and rerun. Complex/unrecognized YAML requires an equivalent simple documented setting.');
   }
   if(harness.id==='claude-code') {
     const settingsPath=path.join(env.CLAUDE_CONFIG_DIR || path.join(home,'.claude'),'settings.json');

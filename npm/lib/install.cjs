@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const F=require('./files.cjs'),P=require('./prerequisites.cjs');
-function bind(bytes,source,destination) {
+function bind(bytes,source,destination,h) {
   let text=bytes.toString('utf8');
   if(!source.endsWith('.md'))return bytes;
   // Worker prompts are exact mathematical inputs, never deployment templates.
@@ -9,6 +9,11 @@ function bind(bytes,source,destination) {
   // Development governance is deliberately not part of an installed campaign.
   text=text.split('\n').filter(line=>!line.includes('[OpenSpec specifications]')&&!line.includes('[root development instructions]')&&!line.includes('govern development and maintenance of MathTrace itself')).join('\n');
   text=text.replaceAll('python -m mathtrace','node .mathtrace/run.cjs');
+  text=text.replaceAll('coding-harnesses/shared/','.mathtrace/shared/');
+  if(h) {
+    text=text.replaceAll(`coding-harnesses/${h.id}/`,'.mathtrace/harness/');
+    text=text.replaceAll('coding-harnesses/<harness>/','.mathtrace/harness/');
+  }
   text=text.replace(/\]\(([^)]+)\)/g,(whole,link)=>{
     if(link.includes('://')||link.startsWith('#'))return whole;
     const origin=source.startsWith('coding-harnesses/antigravity/.agents/')?destination:source;
@@ -35,27 +40,30 @@ function mapping(root,bundle,args,old) {
   }
   if(h.id==='antigravity' && fs.existsSync(F.safe(root,'.agents/math-runtime-manifest.json')) && !old)throw Error('Existing native ownership requires reconciliation with the native installer; it is not adopted automatically');
   const desired={};
-  const add=(source,destination)=>{desired[destination]=bind(F.read(bundle.base,'payload/'+source),source,destination);};
+  const add=(source,destination)=>{desired[destination]=bind(F.read(bundle.base,'payload/'+source),source,destination,h);};
   for(const name of Object.keys(bundle.manifest.files)) {
     if(!name.startsWith('payload/'))continue;
     const source=name.slice(8);
-    if(source.startsWith('coding-harnesses/shared/') || ['coding-harnesses/catalog.json'].includes(source))add(source,source);
-    else if(source.startsWith('docs/'))add(source,'.mathtrace/'+source);
+    if(source.startsWith('coding-harnesses/shared/')) add(source, '.mathtrace/' + source.slice('coding-harnesses/'.length));
+    else if(source==='coding-harnesses/catalog.json') add(source, '.mathtrace/catalog.json');
+    else if(source.startsWith('docs/')) add(source, '.mathtrace/' + source);
     else if(source.startsWith(`coding-harnesses/${h.id}/`)) {
       const local=source.slice(`coding-harnesses/${h.id}/`.length);
-            if(local.startsWith('.')) {
+      if(local.startsWith('.')) {
         if(h.id==='codex' && (local.startsWith('.codex/skills/')||local.startsWith('.agents/skills/')) && !local.startsWith(codexSkills+'/'))continue;
-        add(source,local);
-      } else add(source,source);
+        add(source, local);
+      } else {
+        add(source, '.mathtrace/harness/' + local);
+      }
     }
   }
-  desired['coding-harnesses/README.md']=Buffer.from(`# Installed MathTrace integration\n\nSee [${h.name}](${h.id}/README.md) and [shared policy](shared/POLICY.md).\nRuntime: \`node .mathtrace/run.cjs\`. External host prerequisites are configured separately.\n\nMathTrace public project author/developer: [Velor-dev](https://github.com/Velor-dev).\nCopyright © 2026 Velor-dev. See [license](../.mathtrace/docs/LICENSE).\n`);
+  desired['.mathtrace/harness/README.md']=Buffer.from(`# Installed MathTrace integration\n\nSee [${h.name}](README.md) and [shared policy](../shared/POLICY.md).\nRuntime: \`node .mathtrace/run.cjs\`. External host prerequisites are configured separately.\n\nMathTrace public project author/developer: [Velor-dev](https://github.com/Velor-dev).\nCopyright © 2026 Velor-dev. See [license](../../.mathtrace/docs/LICENSE).\n`);
   for(const name of ['LICENSE'])desired['.mathtrace/docs/'+name]=F.read(bundle.base,name);
   desired['.mathtrace/run.cjs']=F.read(bundle.base,'lib/run.cjs');
   desired['.mathtrace/lib/bootstrap.py']=F.read(bundle.base,'lib/bootstrap.py');
   // All execution binding is root-side; native role bytes stay authoritative.
   const instruction=F.read(bundle.base,'payload/coding-harnesses/shared/project-instructions.md').toString().replace(/^# .*\n\nMerge this section[^\n]*\n\n/,'');
-  const content=bind(Buffer.from(instruction),'coding-harnesses/shared/project-instructions.md','AGENTS.md').toString()+`\nInstalled harness: ${h.id}. Run existing operations with \`node .mathtrace/run.cjs <operation>\` from the project root. This launcher selects the owned runtime; it adds no mathematical workflow.\n`;
+  const content=bind(Buffer.from(instruction),'coding-harnesses/shared/project-instructions.md','AGENTS.md',h).toString()+`\nInstalled harness: ${h.id}. Run existing operations with \`node .mathtrace/run.cjs <operation>\` from the project root. This launcher selects the owned runtime; it adds no mathematical workflow.\n`;
   const merged=F.instructionSection(F.read(root,'AGENTS.md'),content,old?.sectionHash);
   return {h,desired,merged,codexSkills};
 }
@@ -85,6 +93,7 @@ function install(project,bundle,args,deps={}) {
     throw Error('Interrupted file deployment restored; rerun to recompute the installation plan. Campaign history was retained.');
   }
   const exec=deps.execute || P.execute;
+  const status=deps.status || (args.json ? null : (msg => { if (process.stderr.isTTY || !args.json) process.stderr.write(`-> ${msg}\n`); }));
   const mode='direct';
   P.target(mode);
   const probe=P.python(args.python,exec);
@@ -112,13 +121,17 @@ function install(project,bundle,args,deps={}) {
     const temp=F.safe(root,'.mathtrace/tmp');fs.mkdirSync(temp,{recursive:true});
     const env={...process.env,TMPDIR:temp,TEMP:temp,TMP:temp,PIP_CACHE_DIR:temp,PIP_DISABLE_PIP_VERSION_CHECK:'1',PYTHONDONTWRITEBYTECODE:'1'};
     if(!fs.existsSync(runtime)) {
+      status?.('Creating isolated Python environment (.mathtrace/runtime)...');
       exec(probe.executable,['-I','-m','venv',runtime],{cwd:root,env,timeout:120000});
+      status?.('Installing MathTrace wheel into runtime...');
       exec(python,['-I','-m','pip','--isolated','install','--no-index','--no-deps','--no-cache-dir',F.safe(bundle.base,bundle.manifest.wheel)],{cwd:root,env,timeout:120000});
     }
     const observed=checkRuntime(exec,python,root,bundle,runtime);
     const helper=F.safe(bundle.base,'lib/bootstrap.py');
     const bootArgs=['-I',helper,bundle.manifest.lean,mode];
+    status?.(`Provisioning Lean 4 verification engine (${bundle.manifest.lean})...`);
     const provision=JSON.parse(exec(python,bootArgs,{cwd:root,env,timeout:1200000}));
+    status?.('Finalizing installation and verifying state...');
     if(!provision.health?.ok)throw Error('Campaign health verification failed');
     const receipt={schema:1,project:root,version:bundle.manifest.version,harness:map.h.id,codexSkills:map.codexSkills,runtime:relative,basePython:probe.base,wheel:bundle.manifest.files[bundle.manifest.wheel],sectionHash:map.merged.sectionHash,files:planned.owned,...provision,mode};
     const raw=Buffer.from(JSON.stringify(receipt,null,2)+'\n');

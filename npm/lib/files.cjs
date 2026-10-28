@@ -62,7 +62,8 @@ function instructionSection(existing, content, previousHash) {
 }
 function allowed(rel) {
   return rel==='AGENTS.md' || rel==='.mathtrace/install.json' || rel==='.mathtrace/run.cjs'
-    || /^\.mathtrace\/(docs|lib)\/[\w./-]+$/.test(rel)
+    || /^\.mathtrace\/(docs|lib|shared|harness)\/[\w./-]+$/.test(rel)
+    || rel==='.mathtrace/README.md' || rel==='.mathtrace/catalog.json'
     || /^coding-harnesses\/[\w./-]+$/.test(rel)
     || /^\.(agents|codex|claude|grok|cursor|opencode|pi|omp|devin|commandcode|cline|kilo|kimi-code|dsh|prime|clinerules)\/[\w./-]+$/.test(rel);
 }
@@ -70,7 +71,10 @@ function allowed(rel) {
 function ownedDestination(rel,harness) {
   if(!allowed(rel))return false;
   return /^\.mathtrace\/docs\/(?:LICENSE|NOTICE\.txt|THIRD_PARTY_NOTICES\.txt|(?:coordination|completion|evidence|execution|evaluation|learning|native-capture)\.md)$/.test(rel)
-    || rel==='.mathtrace/lib/bootstrap.py' || rel==='.mathtrace/run.cjs'
+    || rel==='.mathtrace/lib/bootstrap.py' || rel==='.mathtrace/run.cjs' || rel==='.mathtrace/catalog.json' || rel==='.mathtrace/README.md'
+    || /^\.mathtrace\/shared\/(?:POLICY\.md|PROTOCOL\.md|help\.md|project-instructions\.md|skills\/math(?:trace-help|-[\w-]+)\/SKILL\.md|roles\/math-[\w-]+\.md)$/.test(rel)
+    || (rel.startsWith('.mathtrace/harness/') && /\/(?:README\.md|SETUP\.md|FALLBACK\.md|launch-settings\.json|config\.example\.yaml|skills\/math(?:trace-help|-[\w-]+)\/SKILL\.md)$/.test(rel))
+    || rel==='.mathtrace/harness/README.md'
     || rel==='coding-harnesses/README.md' || rel==='coding-harnesses/catalog.json'
     || /^coding-harnesses\/shared\/(?:POLICY\.md|PROTOCOL\.md|help\.md|project-instructions\.md|skills\/math(?:trace-help|-[\w-]+)\/SKILL\.md|roles\/math-[\w-]+\.md)$/.test(rel)
     || (rel.startsWith(`coding-harnesses/${harness}/`) && /\/(?:README\.md|SETUP\.md|FALLBACK\.md|launch-settings\.json|config\.example\.yaml|skills\/math(?:trace-help|-[\w-]+)\/SKILL\.md)$/.test(rel))

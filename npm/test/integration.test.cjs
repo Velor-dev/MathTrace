@@ -19,7 +19,7 @@ test('packed installer: every harness, independent runtime, repeat/update and pr
   fs.writeFileSync(path.join(root,'LICENSE'),'Owner license');
   fs.mkdirSync(path.join(root,'docs'));fs.writeFileSync(path.join(root,'docs/owner.md'),'owner docs');
   const profile=path.join(home,'.hermes');fs.mkdirSync(profile,{recursive:true});
-  fs.writeFileSync(path.join(profile,'config.yaml'),JSON.stringify({skills:{external_dirs:[path.join(root,'coding-harnesses/hermes-agent/skills')]}}));
+  fs.writeFileSync(path.join(profile,'config.yaml'),JSON.stringify({skills:{external_dirs:[path.join(root,'.mathtrace/harness/skills')]}}));
   const execute=(command,args,settings)=>{
    if(args.length===1&&args[0]==='--version')return h.id==='opencode'?'1.0.0':'2.1.285';
    if(args[0]==='-I' && args[1]?.endsWith('bootstrap.py'))return P.execute(command,['-I',process.env.MATHTRACE_TEST_TOOLCHAIN,...args.slice(1)],settings);
@@ -29,6 +29,7 @@ test('packed installer: every harness, independent runtime, repeat/update and pr
   const args={harness:h.id,mode:'direct',python:process.env.MATHTRACE_TEST_PYTHON};
   assert.equal(install(root,bundle,args,deps).installed,true,h.id);
   assert.equal(install(root,bundle,args,deps).changedFiles,0,h.id+' repeat');
+  assert.equal(fs.existsSync(path.join(root,'coding-harnesses')),false,h.id+' no root coding-harnesses');
   for(const name of ['LICENSE'])assert.deepEqual(fs.readFileSync(path.join(root,'.mathtrace/docs',name)),fs.readFileSync(path.join(packageDir,name)));
   assert.equal(fs.readFileSync(path.join(root,'LICENSE'),'utf8'),'Owner license');
   if(h.id==='codex'){
