@@ -27,17 +27,8 @@ function python(explicit,exec=execute) {
   }catch{}
   throw Error('Python 3.11+ with venv/ensurepip is required. Install Python using your OS provider (Linux may require python3-venv), then rerun; or pass --python <executable>. No Python was installed.');
 }
-const commands={'devin':'devin','muse-code':'muse','command-code':'commandcode','antigravity':'antigravity','codex':'codex','claude-code':'claude','grok-build':'grok','cursor':'cursor-agent','opencode':'opencode','opencode-v2':'opencode','pi':'pi','omp':'omp','primeagent':'prime','cline-cli':'cline','kilo':'kilo','kimi-code':'kimi','dsh':'dsh','hermes-agent':'hermes'};
 const piHashes={'index.ts':'1d11858d163e2a3a258af51c1923fc55ad825813acd6224462fd25ad61f5401b','agents.ts':'cc85ecd33b89aa575bea3d2a9a9da7654a6305da4de02e5041aa5342a1de29b4'};
-function external(harness,root,{exec=execute,home=os.homedir(),env=process.env,hostExecutable}={}) {
-  const command=hostExecutable || commands[harness.id];
-  if(!command)throw Error('Unknown harness prerequisite contract');
-  let version;
-  try {version=exec(command,['--version']).trim();}catch{throw Error(`Cannot verify ${harness.name} (${command} --version). Install/prepare the documented coding host, then rerun. See coding-harnesses/${harness.id}/SETUP.md or README.md in the package payload.`);}
-  const match=version.match(/\b(\d+)\.(\d+)\.(\d+)\b/);
-  if(!match)throw Error('Unverifiable host version: '+harness.name);
-  const numbers=match.slice(1).map(Number);
-  if(harness.id==='opencode'&&numbers[0]!==1 || harness.id==='opencode-v2'&&numbers[0]!==2)throw Error('Selected OpenCode payload does not match the installed major version');
+function external(harness,root,{home=os.homedir(),env=process.env}={}) {
   if(harness.id==='pi') {
     const folder=path.join(env.PI_CODING_AGENT_DIR || path.join(home,'.pi/agent'),'extensions/subagent');
     for(const [name,digest] of Object.entries(piHashes)) {
@@ -61,7 +52,6 @@ function external(harness,root,{exec=execute,home=os.homedir(),env=process.env,h
     if(!Array.isArray(dirs)||!expanded.some(d=>path.isAbsolute(d)&&path.resolve(d)===expected))throw Error('Hermes skills.external_dirs must verifiably include '+expected+'. Set MATHTRACE_WORKSPACE if using the example binding, keep the project as working directory, and rerun. Complex/unrecognized YAML requires an equivalent simple documented setting.');
   }
   if(harness.id==='claude-code') {
-    if(numbers[0]<2 || (numbers[0]===2 && numbers[1]===0) || (numbers[0]===2&&numbers[1]===1&&numbers[2]<285))throw Error('Claude Code 2.1.285+ is required for this instruction-loading contract');
     const settingsPath=path.join(env.CLAUDE_CONFIG_DIR || path.join(home,'.claude'),'settings.json');
     let combined=false;
     if(fs.existsSync(settingsPath)) {
@@ -76,16 +66,13 @@ function external(harness,root,{exec=execute,home=os.homedir(),env=process.env,h
       const parent=path.dirname(ancestor);if(parent===ancestor)break;ancestor=parent;
     }
   }
-  return {command,version,scope:'Static installation prerequisites checked; authentication, effective tools/model inheritance and independent capture remain host limitations.'};
+  return {scope:'Static installation prerequisites checked; authentication, effective tools/model inheritance and independent capture remain host limitations.'};
 }
-function target(mode,platform=process.platform,arch=process.arch) {
+function target(mode='direct',platform=process.platform,arch=process.arch) {
   if(!['win32','linux','darwin'].includes(platform) || !['x64','arm64'].includes(arch) || platform==='win32'&&arch!=='x64')throw Error('Unsupported native Lean publisher target');
-  if(mode==='bubblewrap'&&(platform==='darwin'||arch!=='x64'))throw Error('Bubblewrap requires Linux x86-64 or Windows x86-64/Ubuntu WSL');
 }
-function sandbox(mode,exec=execute) {
-  if(mode!=='bubblewrap')return;
-  const probe="import ctypes; from pathlib import Path; ctypes.CDLL('libseccomp.so.2'); import shutil; assert shutil.which('bwrap') or (Path.home()/'.local/share/mathtrace/bubblewrap/0.9.0-1ubuntu0.1/bwrap').is_file()";
-  try {if(process.platform==='win32')exec(path.join(process.env.SystemRoot,'System32/wsl.exe'),['-d','Ubuntu','--exec','/usr/bin/python3','-I','-c',probe]);else exec('/usr/bin/python3',['-I','-c',probe]);}
-  catch{throw Error('Optional Bubblewrap/Ubuntu WSL and libseccomp are unavailable. Prepare the existing sandbox externally, then rerun; Direct Execution was not substituted.');}
+function sandbox(mode='direct',exec=execute) {
+  // Direct execution is the standard runtime mode.
+  return;
 }
-module.exports={execute,python,external,target,sandbox,piHashes,commands};
+module.exports={execute,python,external,target,sandbox,piHashes};

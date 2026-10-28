@@ -16,8 +16,7 @@ function bind(bytes,source,destination) {
     if(resolved.startsWith('docs/'))return ']('+path.posix.relative(path.posix.dirname(destination),'.mathtrace/'+resolved)+')';
     return whole;
   });
-  // Source-only development setup is not an installed prerequisite.
-  text=text.replaceAll('`python tools/setup_execution.py`','external optional sandbox setup (see installation report)');
+  text=text.replaceAll('`python tools/setup_execution.py`','external Lean verification engine setup');
   return Buffer.from(text);
 }
 function mapping(root,bundle,args,old) {
@@ -86,12 +85,11 @@ function install(project,bundle,args,deps={}) {
     throw Error('Interrupted file deployment restored; rerun to recompute the installation plan. Campaign history was retained.');
   }
   const exec=deps.execute || P.execute;
-  P.target(args.mode);
+  const mode='direct';
+  P.target(mode);
   const probe=P.python(args.python,exec);
   const old=F.receipt(root);
   const map=mapping(root,bundle,args,old);
-  P.external(map.h,root,{exec,home:deps.home,env:deps.env,hostExecutable:args.hostExecutable});
-  P.sandbox(args.mode,exec);
   // Reject redirects beneath every runtime/state destination before provisioning.
   checkTree(root,'.math');
   for(const name of ['.mathtrace/runtime','.mathtrace/tmp','.mathtrace/install.lock','.mathtrace/journal.json'])F.safe(root,name);
@@ -119,10 +117,10 @@ function install(project,bundle,args,deps={}) {
     }
     const observed=checkRuntime(exec,python,root,bundle,runtime);
     const helper=F.safe(bundle.base,'lib/bootstrap.py');
-    const bootArgs=['-I',helper,bundle.manifest.lean,args.mode];
+    const bootArgs=['-I',helper,bundle.manifest.lean,mode];
     const provision=JSON.parse(exec(python,bootArgs,{cwd:root,env,timeout:1200000}));
     if(!provision.health?.ok)throw Error('Campaign health verification failed');
-    const receipt={schema:1,project:root,version:bundle.manifest.version,harness:map.h.id,codexSkills:map.codexSkills,runtime:relative,basePython:probe.base,wheel:bundle.manifest.files[bundle.manifest.wheel],sectionHash:map.merged.sectionHash,files:planned.owned,...provision,mode:args.mode};
+    const receipt={schema:1,project:root,version:bundle.manifest.version,harness:map.h.id,codexSkills:map.codexSkills,runtime:relative,basePython:probe.base,wheel:bundle.manifest.files[bundle.manifest.wheel],sectionHash:map.merged.sectionHash,files:planned.owned,...provision,mode};
     const raw=Buffer.from(JSON.stringify(receipt,null,2)+'\n');
     const before=F.read(root,'.mathtrace/install.json');
     if(!before?.equals(raw))planned.changes.push({name:'.mathtrace/install.json',before,after:raw});
@@ -135,7 +133,7 @@ function install(project,bundle,args,deps={}) {
         if(!verified.health?.ok||verified.toolchain!==receipt.toolchain)throw Error('Final toolchain/state verification failed');
       }
     });
-    return {installed:true,harness:map.h.id,version:observed.version,runtime:relative,toolchain:receipt.toolchain,mode:args.mode,changedFiles:planned.changes.length,limits:map.h.limits};
+    return {installed:true,harness:map.h.id,version:observed.version,runtime:relative,toolchain:receipt.toolchain,mode,changedFiles:planned.changes.length,limits:map.h.limits};
   }catch(error){throw Error(error.message+'\nInstallation incomplete. Existing mathematical history and any valid provisioning records are retained; fix the reported prerequisite/conflict and rerun.');}
   finally {if(fd!==undefined)fs.closeSync(fd);fs.unlinkSync(lock);}
 }

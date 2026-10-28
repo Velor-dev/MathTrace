@@ -6,6 +6,7 @@ import unittest
 import zipfile
 import warnings
 from tools.package_runtime import ROOT, LEGAL_FILES, build_wheel, validate_wheel
+from mathtrace import __version__
 
 
 class PackageTests(unittest.TestCase):
@@ -36,7 +37,7 @@ class PackageTests(unittest.TestCase):
         import io
         with zipfile.ZipFile(self.wheel) as z:
             original = {n: z.read(n) for n in z.namelist()}
-        info = 'mathtrace-0.1.0.dist-info/'
+        info = f'mathtrace-{__version__}.dist-info/'
         mutations = []
         for name in LEGAL_FILES:
             member = info + 'licenses/' + name
@@ -75,7 +76,7 @@ class PackageTests(unittest.TestCase):
             original = {n: z.read(n) for n in z.namelist()}
         for name, content in [('gsd_math/__init__.py', b'legacy'), ('extra.txt', b'extra'),
                               ('../escape', b'escape'), ('mathtrace/cli.py', b'changed'),
-                              ('mathtrace-0.1.0.dist-info/METADATA', b'Name: other\nVersion: 9\n')]:
+                              (f'mathtrace-{__version__}.dist-info/METADATA', b'Name: other\nVersion: 9\n')]:
             with self.subTest(member=name):
                 path = Path(self.temp.name) / 'bad.whl'
                 with zipfile.ZipFile(path, 'w') as z:

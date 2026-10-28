@@ -6,7 +6,7 @@ async function main() {
   if (Number(process.versions.node.split('.')[0]) < 22) throw Error('Node 22+ is required');
   const args = options(process.argv.slice(2));
   if (args.help) {
-    console.log('MathTrace project installer: [--harness <id>] [--python <executable>] [--host-executable <installed host>] [--execution-mode direct|bubblewrap] [--codex-skills .codex/skills|.agents/skills]');
+    console.log('MathTrace project installer: [--harness <id>] [--python <executable>] [--host-executable <installed host>] [--codex-skills .codex/skills|.agents/skills]');
     return;
   }
   const {loadBundle, install} = require('../lib/install.cjs');
