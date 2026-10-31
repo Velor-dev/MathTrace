@@ -20,6 +20,68 @@ MathTrace structures mathematical inquiry into an immutable, ledger-backed proce
 
 ---
 
+## Architecture & Verification Workflow
+
+MathTrace structures mathematical inquiry not as linear text generation, but as a **dialectical multi-agent research and verification runtime**. Constructive reasoning agents formulate lemmas and deductive proofs in parallel with skeptical adversarial agents searching for counterexamples and logical gaps. Claims and refutations are arbitrated by independent nonparty adjudication and verified through Lean 4 primitive kernel execution inside an append-only, tamper-evident ledger.
+
+```mermaid
+flowchart TD
+    %% Stage 1: Intake & Canonical Ledger
+    subgraph S1["1. Mathematical Intake & Canonical Ledger"]
+        Problem["Mathematical Problem & Target Contract"] --> Intake["/math-intake & Fidelity Auditor"]
+        Intake --> Ledger[("Append-Only Ledger<br/>(SQLite + SHA-256 Digest)")]
+    end
+
+    %% Stage 2: Frontier & Multi-Agent Exploration
+    subgraph S2["2. Frontier & Dialectical Inquiry"]
+        Ledger --> Frontier{"Adaptive Research Frontier<br/>(Lineage & Obligations)"}
+        Frontier -->|"Deductive Exploration"| Constructive["Constructive Agents<br/>• Scout (Route & Lemma Discovery)<br/>• Prover (Inference & Deductive Steps)<br/>• Computationalist (Finite Search & Experiments)"]
+        Frontier -->|"Skeptical Audit"| Adversarial["Adversarial Agents<br/>• Falsifier (Counterexample Search)<br/>• Referee (Circular Logic & Gap Audit)<br/>• Theorem Checker (Premise & Hypothesis Mapping)"]
+    end
+
+    %% Stage 3: Verification & Dispute Adjudication
+    subgraph S3["3. Formal Verification & Adjudication"]
+        Constructive --> Claims["Candidate Inferences & Lemmas"]
+        Adversarial --> Challenge{"Objection or<br/>Counterexample?"}
+        Claims -.-> Challenge
+        Challenge --"Yes (Dispute)"--> Adjudicator["Nonparty Adjudicator<br/>(Substantive Evidence Trial)"]
+        Adjudicator --"Valid Objection"--> Frontier
+        Challenge --"No (Cleared)"--> Formalizer["Lean 4 Formalizer & Kernel<br/>(Primitive Replay in Isolated Sandbox)"]
+    end
+
+    %% Stage 4: Candidate Freeze & Release
+    subgraph S4["4. Freeze, Audit & Release"]
+        Formalizer --> Freeze["Frozen Candidate<br/>(Immutable Proof Manifest)"]
+        Freeze --> Audit["Multi-Dimensional Audit<br/>(Fidelity, Closure & Nonparty Clearance)"]
+        Audit --> Release["Release Receipt<br/>(Cryptographically Pinned Theorem)"]
+        Audit -.-> Advisory["Advisory Learning Layer<br/>(Curated Strategy Heuristics)"]
+    end
+
+    %% Styling
+    classDef default fill:#1e1e2e,stroke:#45475a,stroke-width:1px,color:#cdd6f4;
+    classDef highlight fill:#181825,stroke:#89b4fa,stroke-width:2px,color:#89b4fa;
+    classDef alert fill:#31202b,stroke:#f38ba8,stroke-width:1.5px,color:#f38ba8;
+    classDef success fill:#1c2d27,stroke:#a6e3a1,stroke-width:1.5px,color:#a6e3a1;
+    classDef ledger fill:#1e1e2e,stroke:#f9e2af,stroke-width:1.5px,color:#f9e2af;
+
+    class Ledger ledger;
+    class Frontier,Challenge highlight;
+    class Adversarial,Adjudicator alert;
+    class Constructive,Formalizer success;
+    class Release success;
+```
+
+### Architectural Stages
+
+1. **Intake & Canonical Ledger**: Problem statements, variable domains, and exact completion criteria (proof vs. refutation) are formalized. The `Fidelity Auditor` validates that machine-checkable targets faithfully reflect original requirements. All events are recorded in an append-only SQLite ledger with SHA-256 state digests.
+2. **Dialectical Inquiry**: The campaign manager projects an adaptive frontier of subgoals and obligations. Dual autonomous agent tracks operate simultaneously:
+   - **Constructive Track**: `Scout` charts viable proof routes, `Prover` constructs deductive lemmas and discharges assumptions, and `Computationalist` runs bounded numerical experiments.
+   - **Adversarial Track**: `Falsifier` aggressively tests domain boundaries for counterexamples, `Referee` detects hidden circular dependencies, and `Theorem Checker` verifies applicability of external references.
+3. **Formal Verification & Adjudication**: When disputes or counterexamples emerge, an independent `Adjudicator` evaluates substantive mathematical merit (majority voting is strictly prohibited). Cleared arguments are compiled by `Formalizer` and replayed against a fresh Lean 4 kernel inside an isolated execution environment.
+4. **Candidate Freeze & Release**: Complete solutions are permanently frozen into an immutable dependency manifest. After passing a multi-dimensional audit (full proof coverage, target fidelity, dependency closure, and unadjudicated challenge clearance), a cryptographically verifiable `Release Receipt` is issued. Successful proof tactics and failure patterns are curated into the `Advisory Learning Layer` for future campaigns without contaminating deductive trees.
+
+---
+
 ## Repository Structure
 
 ```text
